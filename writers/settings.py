@@ -48,6 +48,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'writers.urls'
@@ -136,3 +137,5 @@ DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'wapp/static'),
 )
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
