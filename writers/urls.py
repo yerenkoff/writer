@@ -4,4 +4,5 @@ from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('', include('wapp.urls')),
+    path('login/', auth_views.LoginView.as_view()),
 ]

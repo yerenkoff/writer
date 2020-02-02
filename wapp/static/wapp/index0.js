@@ -21,7 +21,7 @@ var LiveSearch = function (_React$Component) {
   _createClass(LiveSearch, [{
     key: "render",
     value: function render() {
-      return React.createElement("input", { onChange: this.props.onChange, onFocus: this.props.onFocus, autoCorrect: "off", className: "LiveSearch", type: "text", placeholder: '"...' + info[Object.keys(info)[0]].surname + '!"' });
+      return React.createElement("input", { onChange: this.props.onChange, onFocus: this.props.onFocus, autoCorrect: "off", className: "LiveSearch", type: "text", placeholder: '"...' + Object.keys(info)[0] + '!"' });
     }
   }]);
 
