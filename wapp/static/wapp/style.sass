@@ -1,0 +1,415 @@
+$black: #222
+$white: #fff
+$gray: #aaa
+$light: #dedede
+$dark: #f0f0f0
+$bold: 700
+$medium: 500
+$regular: 400
+$thin: 300
+
+*
+	margin: 0
+	padding: 0
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0)
+	outline: 0
+a
+	text-decoration: none
+
+html, body
+	height: 100%
+#root
+	height: 99.9%
+	// width: 100%
+	overflow-y: scroll
+	overflow-x: hidden
+	// background: #ccc
+.container
+	// background: $light
+	transition: .3s
+	// display: none
+	width: 90%
+	// height: 50%
+	overflow: hidden
+	margin: auto
+	max-width: 800px
+h1
+	font-family: 'Montserrat', sans-serif
+	font-weight: $bold
+	color: $black
+	text-align: center
+	margin-bottom: 10px
+	line-height: 50px
+.LiveSearch
+	display: block
+	line-height: 40px
+	border: 2px solid $black
+	width: 100%
+	box-sizing: border-box
+	padding: 0 5px
+	font-family: 'Montserrat', sans-serif
+	font-weight: $medium
+	color: $black
+	outline: none
+	box-shadow: none
+	text-decoration: none !important
+	position: relative
+	z-index: 9
+	margin-bottom: 10px
+	&::placeholder
+		font-size: 0.9rem
+		color: $gray
+.SearchResults
+	position: absolute
+	width: 100%
+	height: 0
+	// transform: scale(0)
+	// transform: translate(-100%)
+	background: rgba(255,255,255,1)
+	opacity: 0
+	overflow: hidden
+	display: block
+	transition: opacity .3s
+	top: 0
+	left: 0
+	z-index: 8
+	button
+		// width: 50px
+		cursor: pointer
+		display: block
+		width: 100%
+		line-height: 50px
+		text-align: center
+		font-size: 1.2em
+		color: $black
+		background: none
+		border: none
+		outline: none
+	ul
+		// background: #ccc
+		margin-top: 60px
+		a
+			display: block
+			text-align: center
+			font-family: 'Montserrat', sans-serif
+			font-weight: $medium
+			color: $black
+			line-height: 40px
+// .SearchResultsToggle
+// 	animation-name: search
+// 	animation-duration: 2s
+// 	animation-fill-mode: both
+// 	animation-direction: alternate
+	// transition: .3s
+	// display: block !important
+	// height: 100%
+	// transform: scale(1)
+	// opacity: 1
+// @keyframes search
+// 	0%
+// 		transform: translate(-100%)
+// 		opacity: 0
+// 	100%
+// 		opacity: 1
+// 		transform: translate(0%)
+.Button
+	cursor: pointer
+	background: $dark
+	border: 0px solid $black
+	padding: 0 5px
+	user-select: none
+	// display: block
+	// width: 100%
+	line-height: 40px
+	font-size: 0.9em
+	height: 40px
+	font-family: 'Montserrat', sans-serif
+	font-weight: $medium
+	color: $black
+	box-sizing: border-box
+	outline: none
+	transition: linear .1s
+	// border-radius: 3px
+	min-width: 70px
+	// white-space: nowrap
+	text-overflow: ellipsis
+	overflow: hidden
+	&:hover
+		background: $light
+.SortButton
+	width: 100%
+	// margin-bottom: 5px
+	// transition: linear 1s
+	
+		// background: #000
+		// transition: linear 1s
+.SortList
+	// margin-bottom: 5px
+	// display: none
+	// background: #000
+	// margin-top: 5px
+	// padding-top: 5px
+	// padding-bottom: 5px
+	box-sizing: border-box
+	max-height: 0
+	opacity: 0
+	transition: .3s
+	overflow: hidden
+	text-align: center
+	.SortListButton
+		
+		margin: 0 2.5px
+		&:first-child
+			margin-left: 0
+		&:last-child
+			margin-right: 0
+.SortParameters
+	// display: none
+	// margin-left: 5px
+	// background: #000
+	width: 100%
+	max-height: 0
+	opacity: 0
+	transition: .3s
+	white-space: nowrap
+	text-align: center
+	// text-overflow: ellipsis
+	overflow-x: scroll
+	-ms-overflow-style: none
+	&::-webkit-scrollbar
+		display: none
+	button
+		margin-right: 5px
+		// text-overflow: ellipsis
+.WritersPreview
+	// background: #000
+	margin: 10px auto 0
+	opacity: 1
+	transition: .3s
+	max-width: 800px
+.moreButtonCont
+	clear: both
+	overflow: hidden
+	#moreButton
+		display: block
+		margin: 30px auto
+
+	// display: none
+.H2
+	font-family: 'Montserrat', sans-serif
+	font-size: 1.6em
+h3
+	// font-weight: $medium
+	// color: $black
+	font-size: 1.2em
+	font-family: 'Montserrat', sans-serif
+.H4
+	font-weight: $medium
+	font-size: 1em
+	color: $white
+	font-family: 'Montserrat', sans-serif
+p
+	font-size: 0.9em
+	font-family: 'Montserrat', sans-serif
+.WriterPreview
+	cursor: pointer
+	height: 400px
+	background-size: cover
+	// background-attachment: fixed
+	background-position: center
+	background-repeat: none
+	margin-bottom: 5px
+	position: relative
+	transition: transform .3s
+	// transform: scale(0.95)
+	// background: url(img/gogol0.jpg)
+	&:last-child
+		margin-bottom: 0
+	.WriterPreviewInfo
+		// background: #aaa
+		position: absolute
+		bottom: 30px
+		left: 0
+		width: 100%
+		pointer-events: none
+		*
+			// background: #555
+			text-align: center
+			font-weight: $medium
+			color: $white
+			line-height: 24px
+			font-family: 'Montserrat', sans-serif
+			&:last-child
+				font-weight: $thin
+	>.H4
+		// background: #c55
+		line-height: 60px
+		width: 60px
+		text-align: center
+		float: right
+		>span
+			font-size: 0.8em
+			line-height: 58px
+			// height: 60px
+			// width: 10px
+			position: absolute
+			// background: #000
+.Writer
+	// display: none
+	opacity: 0
+	transform: scale(0.95)
+	display: none
+	transition: .3s
+	max-width: 800px
+	margin: auto
+	// background: #ccc
+	// margin-top: 20px
+	.H2
+		color: $black
+		text-align: center
+		font-weight: $bold
+		// font-size: 2em
+		// background: #aaa
+		// float: left
+		// width: 50%
+		line-height: 40px
+	>.H4
+		color: $black !important
+	.H4
+		color: $black
+		text-align: center
+		// float: left
+		// width: 50%
+		// background: #aaa
+		// line-height: 40px
+	section
+		height: 400px
+		background-size: cover
+		// background-attachment: fixed
+		background-position: center
+		background-repeat: none
+		// margin: 10px 0
+		margin-bottom: 20px
+		position: relative
+		*
+			z-index: 1
+			position: relative
+		#c
+			z-index: auto
+			width: 100%
+			height: 100%
+			// touch-action: auto !important
+			position: absolute
+			top: 0
+			left: 0
+		.back
+			// background: #ccc
+			width: 60px
+			height: 60px
+			float: left
+			transition: .3s
+			cursor: pointer
+			img
+				position: absolute
+				height: 12px
+				width: 60px
+				filter: invert(1)
+				top: 23px
+				// background: #000
+				left: 0px
+			&:hover
+				opacity: 0.5
+		.H4
+			// background: #c44
+			// text-align: center
+			float: right
+			line-height: 60px
+			width: 60px
+			color: $white
+			>span
+				font-size: 0.8em
+				line-height: 58px
+				// height: 60px
+				// width: 10px
+				// background: #ccc
+				position: absolute
+		ul
+			// background: #ccc
+			position: absolute
+			bottom: 0
+			left: 0
+			width: 100%
+			text-align: center
+			li
+				// background: #777
+				display: inline-block
+				margin: 0 2px
+				color: rgba(255,255,255,0.5)
+				line-height: 40px
+				font-size: 0.5em
+				// &:first-child
+				// 	color: $white
+	>ul
+		// background: #ccc
+		text-align: center
+		margin: 20px 0 30px
+		button
+			width: calc((100% - 10px) / 3)
+			margin-right: 5px
+			&:last-child
+				margin-right: 0
+	.about
+		// background: #eee
+		padding: 0 0px 50px
+		transition: .3s
+		h3
+			font-weight: $bold
+			color: $black
+			line-height: 40px
+			padding: 0 10px
+		p
+			font-weight: $medium
+			color: $black
+			line-height: 23px
+			padding: 0 10px 20px
+		img
+			width: 100%
+			height: 200px
+			object-fit: cover
+			padding: 0px 0 20px
+.activeCircle
+	color: $white !important
+.Initial
+	padding-top: 100px
+	h1
+		line-height: 40px
+		margin: 0
+		color: $gray
+	.H4
+		color: $black
+		text-align: center
+	.Button
+		margin: 30px auto 0
+		display: block
+@media (min-width: 768px)
+	.SortButton
+		width: 200px
+		float: left
+		display: block
+		margin-right: 10px
+	.SortParameters
+		width: auto
+		text-align: left
+	.SortList
+		text-align: left
+	.WritersPreview
+		padding-bottom: 50px
+		overflow: hidden
+	.WriterPreview
+		width: calc((100% - 5px) / 2)
+		float: left
+		margin-right: 5px
+		&:nth-child(even)
+			margin-right: 0
+	#moreButton
+		// margin: auto

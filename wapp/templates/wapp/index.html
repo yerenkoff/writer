@@ -1,0 +1,103 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="{% static 'wapp/style.css' %}">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700&display=swap&subset=cyrillic" rel="stylesheet">
+  <title>Писатели</title>
+</head>
+<body>
+  <div id="root"></div>
+  <!-- <div id="dataa">{{ data }}</div> -->
+  <script>
+    // import Mesh from '{% static "wapp/mesh.js" %}';
+    // import info from '{% static "wapp/info.js" %}';
+    console.log('{{ data|safe }}');
+    let info = '{{ data|safe }}';
+    let moreCounter = '{{ moreCounter }}';
+    moreCounter = (moreCounter == 'True');
+// let p = '{% static "wapp/info.js" %}';
+    var gogol0 = '{% static "wapp/img/gogol0.jpg" %}';
+    var gorky0 = '{% static "wapp/img/gorky0.jpg" %}';
+    var gorky1 = '{% static "wapp/img/gorky1.jpg" %}';
+    var gorky2 = '{% static "wapp/img/gorky2.jpg" %}';
+    var hegel0 = '{% static "wapp/img/hegel0.jpg" %}';
+    var hegel1 = '{% static "wapp/img/hegel1.jpg" %}';
+    var hegel2 = '{% static "wapp/img/hegel2.jpg" %}';
+    var remarque0 = '{% static "wapp/img/remarque0.jpg" %}';
+    var remarque1 = '{% static "wapp/img/remarque1.jpg" %}';
+    var remarque2 = '{% static "wapp/img/remarque2.jpg" %}';
+    var tolstoy0 = '{% static "wapp/img/tolstoy0.jpg" %}';
+    var tolstoy1 = '{% static "wapp/img/tolstoy1.jpg" %}';
+    var tolstoy2 = '{% static "wapp/img/tolstoy2.jpg" %}';
+    var landscape0 = '{% static "wapp/img/landscape0.jpg" %}';
+    var landscape1 = '{% static "wapp/img/landscape1.jpg" %}';
+    var books = '{% static "wapp/img/books.jpg" %}';
+    let back = '{% static "wapp/img/back.svg" %}';
+    // info = JSON.parse(info);
+  </script>
+  <script id="fragmentPlane" type="x-shader/x-fragment">
+   precision mediump float;
+
+   varying vec2 vUv;
+   uniform float u_time;
+   uniform float progress;
+   uniform sampler2D tex0;
+   uniform sampler2D tex1;
+   uniform vec2 resolution;
+   uniform float indexy;
+
+   void main() {
+   vec2 uv = vUv;
+   uv *= mix(resolution.y/resolution.x, 1., 1.0-ceil(indexy));
+   uv.x *= resolution.x/resolution.y;
+   //uv.y += (resolution.y/4.) * 1. / resolution.y;
+   uv.y += indexy;
+
+   vec3 t0 = texture2D(tex0, vec2(uv.x+sin(fract(progress)*uv.y*5.)*0.1, uv.y+sin(fract(progress)*uv.x*5.)*0.1)).rgb;
+
+   vec3 t1 = texture2D(tex1, vec2(uv.x+sin(u_time+uv.y*20.)*(1.-0.3-fract(progress-0.3))*0.02, uv.y+sin(u_time+uv.x*10.)*(1.-0.3-fract(progress-0.3))*0.02)).rgb;
+
+   t0 = texture2D(tex0, vec2(uv.x, uv.y+sin(uv.x*5.*fract(progress))*0.2-fract(progress))).rgb;
+   t0 = texture2D(tex0, vec2(uv.x+sin(uv.y*5.*fract(progress)+sin(uv.x*20.)*fract(progress))*0.1-fract(progress)*0.3, uv.y)).rgb;
+   t0 = mix(t0, t0.rrr*0., fract(progress));
+   t1 = texture2D(tex1, vec2(uv.x, uv.y)).rgb;
+   t1 = mix(t1, t1.rrr*0., (1.-fract(progress)));
+
+   vec2 st = vUv - 0.5;
+   float pr = fract(progress);
+   st *= 0.6;
+   st = vec2(st.x, st.y);
+   vec3 color = mix(t1, t0, smoothstep(0.9, 0.9+0.005, st.x+sin(st.y*3.+u_time*0.5)*0.1+0.4+(1.-pr)));
+
+   gl_FragColor = vec4(color, 1.);
+
+   //gl_FragColor = mix(gl_FragColor*0., gl_FragColor*1., smoothstep(0.9, 0.9+0.002, abs(st.y+sin(st.x*5.+u_time*0.5)*0.01-pr+0.5)+0.895));
+ }
+</script>
+
+<script id="vertexShader" type="x-shader/x-vertex">
+	precision mediump float;
+  attribute vec2 positions;
+  attribute vec2 uvs;
+  varying vec2 vUv;
+  uniform mat3 translationMatrix;
+  uniform mat3 projectionMatrix;
+
+  void main() {
+  vUv = uvs;
+  gl_Position = vec4((projectionMatrix * translationMatrix * vec3(positions, 1.0)).xy, 0.0, 1.0);
+}
+</script>
+<script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/5.2.0/pixi.min.js"></script>
+<!-- <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script> -->
+<!-- <script type="module" src="{% static 'wapp/admin.js' %}"></script> -->
+
+<script type="module" src="{% static 'wapp/info.js' %}"></script>
+<script type="module" src="{% static 'wapp/index.js' %}"></script>
+</body>
+</html>

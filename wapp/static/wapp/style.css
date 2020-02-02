@@ -1,0 +1,336 @@
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  outline: 0; }
+
+a {
+  text-decoration: none; }
+
+html, body {
+  height: 100%; }
+
+#root {
+  height: 99.9%;
+  overflow-y: scroll;
+  overflow-x: hidden; }
+
+.container {
+  transition: .3s;
+  width: 90%;
+  overflow: hidden;
+  margin: auto;
+  max-width: 800px; }
+
+h1 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  color: #222;
+  text-align: center;
+  margin-bottom: 10px;
+  line-height: 50px; }
+
+.LiveSearch {
+  display: block;
+  line-height: 40px;
+  border: 2px solid #222;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 5px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  color: #222;
+  outline: none;
+  box-shadow: none;
+  text-decoration: none !important;
+  position: relative;
+  z-index: 9;
+  margin-bottom: 10px; }
+  .LiveSearch::placeholder {
+    font-size: 0.9rem;
+    color: #aaa; }
+
+.SearchResults {
+  position: absolute;
+  width: 100%;
+  height: 0;
+  background: white;
+  opacity: 0;
+  overflow: hidden;
+  display: block;
+  transition: opacity .3s;
+  top: 0;
+  left: 0;
+  z-index: 8; }
+  .SearchResults button {
+    cursor: pointer;
+    display: block;
+    width: 100%;
+    line-height: 50px;
+    text-align: center;
+    font-size: 1.2em;
+    color: #222;
+    background: none;
+    border: none;
+    outline: none; }
+  .SearchResults ul {
+    margin-top: 60px; }
+    .SearchResults ul a {
+      display: block;
+      text-align: center;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 500;
+      color: #222;
+      line-height: 40px; }
+
+.Button {
+  cursor: pointer;
+  background: #f0f0f0;
+  border: 0px solid #222;
+  padding: 0 5px;
+  user-select: none;
+  line-height: 40px;
+  font-size: 0.9em;
+  height: 40px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  color: #222;
+  box-sizing: border-box;
+  outline: none;
+  transition: linear .1s;
+  min-width: 70px;
+  text-overflow: ellipsis;
+  overflow: hidden; }
+  .Button:hover {
+    background: #dedede; }
+
+.SortButton {
+  width: 100%; }
+
+.SortList {
+  box-sizing: border-box;
+  max-height: 0;
+  opacity: 0;
+  transition: .3s;
+  overflow: hidden;
+  text-align: center; }
+  .SortList .SortListButton {
+    margin: 0 2.5px; }
+    .SortList .SortListButton:first-child {
+      margin-left: 0; }
+    .SortList .SortListButton:last-child {
+      margin-right: 0; }
+
+.SortParameters {
+  width: 100%;
+  max-height: 0;
+  opacity: 0;
+  transition: .3s;
+  white-space: nowrap;
+  text-align: center;
+  overflow-x: scroll;
+  -ms-overflow-style: none; }
+  .SortParameters::-webkit-scrollbar {
+    display: none; }
+  .SortParameters button {
+    margin-right: 5px; }
+
+.WritersPreview {
+  margin: 10px auto 0;
+  opacity: 1;
+  transition: .3s;
+  max-width: 800px; }
+
+.moreButtonCont {
+  clear: both;
+  overflow: hidden; }
+  .moreButtonCont #moreButton {
+    display: block;
+    margin: 30px auto; }
+
+.H2 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.6em; }
+
+h3 {
+  font-size: 1.2em;
+  font-family: 'Montserrat', sans-serif; }
+
+.H4 {
+  font-weight: 500;
+  font-size: 1em;
+  color: #fff;
+  font-family: 'Montserrat', sans-serif; }
+
+p {
+  font-size: 0.9em;
+  font-family: 'Montserrat', sans-serif; }
+
+.WriterPreview {
+  cursor: pointer;
+  height: 400px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: none;
+  margin-bottom: 5px;
+  position: relative;
+  transition: transform .3s; }
+  .WriterPreview:last-child {
+    margin-bottom: 0; }
+  .WriterPreview .WriterPreviewInfo {
+    position: absolute;
+    bottom: 30px;
+    left: 0;
+    width: 100%;
+    pointer-events: none; }
+    .WriterPreview .WriterPreviewInfo * {
+      text-align: center;
+      font-weight: 500;
+      color: #fff;
+      line-height: 24px;
+      font-family: 'Montserrat', sans-serif; }
+      .WriterPreview .WriterPreviewInfo *:last-child {
+        font-weight: 300; }
+  .WriterPreview > .H4 {
+    line-height: 60px;
+    width: 60px;
+    text-align: center;
+    float: right; }
+    .WriterPreview > .H4 > span {
+      font-size: 0.8em;
+      line-height: 58px;
+      position: absolute; }
+
+.Writer {
+  opacity: 0;
+  transform: scale(0.95);
+  display: none;
+  transition: .3s;
+  max-width: 800px;
+  margin: auto; }
+  .Writer .H2 {
+    color: #222;
+    text-align: center;
+    font-weight: 700;
+    line-height: 40px; }
+  .Writer > .H4 {
+    color: #222 !important; }
+  .Writer .H4 {
+    color: #222;
+    text-align: center; }
+  .Writer section {
+    height: 400px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: none;
+    margin-bottom: 20px;
+    position: relative; }
+    .Writer section * {
+      z-index: 1;
+      position: relative; }
+    .Writer section #c {
+      z-index: auto;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0; }
+    .Writer section .back {
+      width: 60px;
+      height: 60px;
+      float: left;
+      transition: .3s;
+      cursor: pointer; }
+      .Writer section .back img {
+        position: absolute;
+        height: 12px;
+        width: 60px;
+        filter: invert(1);
+        top: 23px;
+        left: 0px; }
+      .Writer section .back:hover {
+        opacity: 0.5; }
+    .Writer section .H4 {
+      float: right;
+      line-height: 60px;
+      width: 60px;
+      color: #fff; }
+      .Writer section .H4 > span {
+        font-size: 0.8em;
+        line-height: 58px;
+        position: absolute; }
+    .Writer section ul {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      text-align: center; }
+      .Writer section ul li {
+        display: inline-block;
+        margin: 0 2px;
+        color: rgba(255, 255, 255, 0.5);
+        line-height: 40px;
+        font-size: 0.5em; }
+  .Writer > ul {
+    text-align: center;
+    margin: 20px 0 30px; }
+    .Writer > ul button {
+      width: calc((100% - 10px) / 3);
+      margin-right: 5px; }
+      .Writer > ul button:last-child {
+        margin-right: 0; }
+  .Writer .about {
+    padding: 0 0px 50px;
+    transition: .3s; }
+    .Writer .about h3 {
+      font-weight: 700;
+      color: #222;
+      line-height: 40px;
+      padding: 0 10px; }
+    .Writer .about p {
+      font-weight: 500;
+      color: #222;
+      line-height: 23px;
+      padding: 0 10px 20px; }
+    .Writer .about img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      padding: 0px 0 20px; }
+
+.activeCircle {
+  color: #fff !important; }
+
+.Initial {
+  padding-top: 100px; }
+  .Initial h1 {
+    line-height: 40px;
+    margin: 0;
+    color: #aaa; }
+  .Initial .H4 {
+    color: #222;
+    text-align: center; }
+  .Initial .Button {
+    margin: 30px auto 0;
+    display: block; }
+
+@media (min-width: 768px) {
+  .SortButton {
+    width: 200px;
+    float: left;
+    display: block;
+    margin-right: 10px; }
+  .SortParameters {
+    width: auto;
+    text-align: left; }
+  .SortList {
+    text-align: left; }
+  .WritersPreview {
+    padding-bottom: 50px;
+    overflow: hidden; }
+  .WriterPreview {
+    width: calc((100% - 5px) / 2);
+    float: left;
+    margin-right: 5px; }
+    .WriterPreview:nth-child(even) {
+      margin-right: 0; } }

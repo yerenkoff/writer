@@ -1,0 +1,227 @@
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  outline: 0; }
+
+html, body {
+  height: 100%; }
+
+#root {
+  height: 99.9%;
+  max-width: 1100px;
+  margin: auto;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  padding: 50px 20px 150px;
+  box-sizing: border-box;
+  -ms-overflow-style: none; }
+  #root::-webkit-scrollbar {
+    display: none; }
+
+#NewPost {
+  transition: .3s;
+  width: 40%;
+  overflow: hidden;
+  margin: auto;
+  float: left;
+  max-width: 500px; }
+
+h1 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  color: #222;
+  text-align: left;
+  margin-bottom: 10px;
+  line-height: 50px; }
+
+.TextField {
+  display: block;
+  line-height: 40px;
+  border: 2px solid #222;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 5px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  color: #222;
+  outline: none;
+  text-decoration: none;
+  box-shadow: none;
+  text-decoration: none !important;
+  position: relative;
+  z-index: 9;
+  margin-bottom: 10px; }
+  .TextField::placeholder {
+    font-size: 0.9rem;
+    color: #aaa; }
+
+h2 {
+  font-size: 1.2em;
+  font-family: 'Montserrat', sans-serif;
+  text-align: left;
+  line-height: 40px;
+  margin-bottom: 10px; }
+
+.Button {
+  cursor: pointer;
+  background: #f0f0f0;
+  border: 0px solid #222;
+  padding: 0 5px;
+  user-select: none;
+  line-height: 40px;
+  font-size: 0.9em;
+  height: 40px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  color: #222;
+  box-sizing: border-box;
+  outline: none;
+  transition: linear .1s;
+  min-width: 70px;
+  text-overflow: ellipsis;
+  overflow: hidden; }
+  .Button:hover {
+    background: #dedede; }
+  .Button input {
+    width: 1px;
+    opacity: 0; }
+
+.ImagesField {
+  display: block;
+  text-align: center;
+  white-space: nowrap;
+  text-overflow: ellipsis; }
+
+.addField {
+  text-align: center;
+  margin-bottom: 10px; }
+  .addField .Button {
+    margin: 0 5px; }
+    .addField .Button:first-child {
+      margin: 0; }
+    .addField .Button:last-child {
+      margin: 0; }
+
+.addedField {
+  overflow: hidden;
+  margin-bottom: 10px;
+  position: relative; }
+  .addedField .Button:first-child {
+    width: 100%;
+    margin-right: 5px;
+    float: left; }
+  .addedField .Button:last-child {
+    background: none;
+    position: absolute;
+    min-width: auto;
+    width: 44px;
+    height: 100%;
+    z-index: 9;
+    top: 0;
+    right: 0; }
+  .addedField .TextField {
+    margin-right: 5px;
+    float: left;
+    margin-bottom: 0;
+    resize: none;
+    padding-right: 40px; }
+  .addedField .TextAreaField + button {
+    height: 44px !important; }
+
+.categories {
+  margin: 20px 0; }
+
+.submitButton {
+  display: block;
+  margin: 40px auto 0;
+  border-bottom: 2px solid #aaa; }
+
+.WritersList {
+  overflow: hidden;
+  float: right;
+  margin-left: 50px;
+  width: calc(60% - 50px);
+  max-width: 500px; }
+  .WritersList .moreButton {
+    display: block;
+    margin: auto;
+    clear: both; }
+  .WritersList h2 {
+    text-align: center;
+    margin-bottom: 14px; }
+  .WritersList section {
+    clear: both;
+    overflow: hidden;
+    margin-bottom: 8px; }
+    .WritersList section img {
+      display: block;
+      float: left;
+      width: 100px;
+      height: 98px;
+      object-fit: cover;
+      margin-right: 5px;
+      border: 2px solid #222;
+      box-sizing: border-box; }
+    .WritersList section h4 {
+      font-weight: 500;
+      font-size: 1em;
+      font-family: 'Montserrat', sans-serif;
+      line-height: 100px;
+      text-align: center;
+      float: left;
+      padding: 0 2px;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      max-width: calc(100% - 180px);
+      overflow: hidden; }
+    .WritersList section .Button {
+      display: block;
+      float: right;
+      height: 100px;
+      background: none; }
+
+.moreButtonCont {
+  clear: both;
+  overflow: hidden; }
+  .moreButtonCont #moreButton {
+    display: block;
+    margin: 30px auto; }
+
+@media (max-width: 768px) {
+  #root {
+    padding: 0px 20px 50px; }
+  h1 {
+    text-align: center; }
+  #NewPost {
+    float: none;
+    width: 100% !important; }
+  .WritersList {
+    margin: 50px auto 0;
+    float: none;
+    width: 100% !important; }
+    .WritersList section {
+      width: calc(50% - 2.5px);
+      float: left;
+      clear: none;
+      position: relative;
+      padding-top: 40px;
+      margin-bottom: 20px; }
+      .WritersList section:nth-child(even) {
+        margin-right: 5px; }
+      .WritersList section img {
+        float: none;
+        margin: 0 auto 10px; }
+      .WritersList section h4 {
+        float: none;
+        line-height: 20px;
+        text-align: center;
+        white-space: normal;
+        max-width: none; }
+      .WritersList section .Button {
+        position: absolute;
+        top: 0;
+        right: 0;
+        min-width: auto;
+        width: 40px;
+        height: 40px; } }
