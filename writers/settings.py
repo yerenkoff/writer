@@ -25,7 +25,7 @@ SECRET_KEY = 'ovqu7dn74q=(1pj2jx3n*f5hjxfn47hxg!-wim)_apc1!vovf$'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '192.168.1.76', '10.65.148.41']
+ALLOWED_HOSTS = ['localhost', '192.168.1.76', '10.65.148.41', 'kiryawriters.herokuapp.com', '127.0.0.1']
 
 
 # Application definition
