@@ -10,33 +10,10 @@
 </head>
 <body>
   <div id="root"></div>
-  <!-- <div id="dataa">{{ data }}</div> -->
   <script>
-    // import Mesh from '{% static "wapp/mesh.js" %}';
-    // import info from '{% static "wapp/info.js" %}';
-    console.log('{{ data|safe }}');
     let info = '{{ data|safe }}';
     let moreCounter = '{{ moreCounter }}';
     moreCounter = (moreCounter == 'True');
-// let p = '{% static "wapp/info.js" %}';
-    var gogol0 = '{% static "wapp/img/gogol0.jpg" %}';
-    var gorky0 = '{% static "wapp/img/gorky0.jpg" %}';
-    var gorky1 = '{% static "wapp/img/gorky1.jpg" %}';
-    var gorky2 = '{% static "wapp/img/gorky2.jpg" %}';
-    var hegel0 = '{% static "wapp/img/hegel0.jpg" %}';
-    var hegel1 = '{% static "wapp/img/hegel1.jpg" %}';
-    var hegel2 = '{% static "wapp/img/hegel2.jpg" %}';
-    var remarque0 = '{% static "wapp/img/remarque0.jpg" %}';
-    var remarque1 = '{% static "wapp/img/remarque1.jpg" %}';
-    var remarque2 = '{% static "wapp/img/remarque2.jpg" %}';
-    var tolstoy0 = '{% static "wapp/img/tolstoy0.jpg" %}';
-    var tolstoy1 = '{% static "wapp/img/tolstoy1.jpg" %}';
-    var tolstoy2 = '{% static "wapp/img/tolstoy2.jpg" %}';
-    var landscape0 = '{% static "wapp/img/landscape0.jpg" %}';
-    var landscape1 = '{% static "wapp/img/landscape1.jpg" %}';
-    var books = '{% static "wapp/img/books.jpg" %}';
-    let back = '{% static "wapp/img/back.svg" %}';
-    // info = JSON.parse(info);
   </script>
   <script id="fragmentPlane" type="x-shader/x-fragment">
    precision mediump float;
@@ -91,12 +68,9 @@
   gl_Position = vec4((projectionMatrix * translationMatrix * vec3(positions, 1.0)).xy, 0.0, 1.0);
 }
 </script>
-<script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
-<script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/react@16/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js" crossorigin></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/5.2.0/pixi.min.js"></script>
-<!-- <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script> -->
-<!-- <script type="module" src="{% static 'wapp/admin.js' %}"></script> -->
-
 <script type="module" src="{% static 'wapp/info.js' %}"></script>
 <script type="module" src="{% static 'wapp/index.js' %}"></script>
 </body>
