@@ -38,6 +38,12 @@ html, body
 	margin: auto
 	float: left
 	max-width: 500px
+header
+	overflow: hidden
+	button
+		display: block
+		float: right
+		margin-top: 10px
 h1
 	font-family: 'Montserrat', sans-serif
 	font-weight: $bold
@@ -45,6 +51,8 @@ h1
 	text-align: left
 	margin-bottom: 10px
 	line-height: 50px
+	max-width: 60%
+	float: left
 .TextField
 	display: block
 	line-height: 40px
@@ -206,8 +214,15 @@ h2
 @media (max-width: 768px)
 	#root
 		padding: 0px 20px 50px
+	header
+		max-width: 500px
+		margin: auto
 	h1
 		text-align: center
+		clear: both
+		max-width: 100%
+		margin: 60px auto 10px
+		float: none
 	#NewPost
 		float: none
 		width: 100% !important

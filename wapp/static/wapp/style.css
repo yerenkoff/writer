@@ -1,3 +1,6 @@
+input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus textarea:-webkit-autofill, textarea:-webkit-autofill:hover, textarea:-webkit-autofill:focus, select:-webkit-autofill, select:-webkit-autofill:hover, select:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important; }
+
 * {
   margin: 0;
   padding: 0;
@@ -21,6 +24,12 @@ html, body {
   overflow: hidden;
   margin: auto;
   max-width: 800px; }
+
+.loginForm {
+  max-width: 300px; }
+  .loginForm .Button {
+    display: block;
+    margin: auto; }
 
 h1 {
   font-family: 'Montserrat', sans-serif;

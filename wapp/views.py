@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib.auth import logout
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 import json
@@ -21,7 +22,11 @@ def index(request):
 	}
 	return render(request, 'wapp/index.html', context=context)
 
-# @login_required(login_url='/login/')
+def exit(request):
+	logout(request)
+	return redirect('/')
+
+@login_required(login_url='/login/')
 def admin(request):
 	global moreCounter
 	moreCounter = 6

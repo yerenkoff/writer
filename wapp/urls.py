@@ -9,4 +9,5 @@ urlpatterns = [
     path('newPost/', views.newPost, name='newPost'),
     path('delete/', views.delete, name='delete'),
     path('more/', views.more, name='more'),
+    path('exit/', views.exit, name='exit'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

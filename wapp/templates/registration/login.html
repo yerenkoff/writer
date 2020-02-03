@@ -8,22 +8,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body onload="loadLogin()">
-  <h1>Логин</h1>
-  <form method="post">
-            {% csrf_token %}
-      <h2 class="H2">Имя пользователя</h2>
-      {{ form.username }}
-      <h2 class="H2">Пароль</h2>
-      {{ form.password }}
-      <button class="Button" type="submit">Войти</button>
-    </form>
-    <script>
+  <h1>Вход</h1>
+  <form method="post" class="loginForm container">
+    {% csrf_token %}
+    <h3>Имя</h3>
+    {{ form.username }}
+    <h3>Пароль</h3>
+    {{ form.password }}
+    <button class="Button" type="submit">Войти</button>
+  </form>
+  <script>
+    [].forEach.call(document.getElementsByClassName("loginForm")[0].getElementsByTagName("input"), (el) => {
+      el.classList.add("LiveSearch");
+    });
     function loadLogin() {
       var string = window.location.toString(), substring = "/login/?next=/admin/";
       if (!string.includes(substring)){
-            window.location = substring;
+        window.location = substring;
       }
     }
-    </script>
+  </script>
 </body>
 </html>

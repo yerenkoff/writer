@@ -323,6 +323,11 @@ var NewPost = function (_React$Component6) {
 			});
 		}
 	}, {
+		key: "handleExit",
+		value: function handleExit() {
+			location.href = "/exit/";
+		}
+	}, {
 		key: "render",
 		value: function render() {
 			var _this11 = this;
@@ -331,9 +336,18 @@ var NewPost = function (_React$Component6) {
 				"div",
 				null,
 				React.createElement(
-					"h1",
+					"header",
 					null,
-					"\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u043F\u0438\u0441\u0430\u0442\u0435\u043B\u044F"
+					React.createElement(
+						"button",
+						{ className: "Button", onClick: this.handleExit },
+						"\u0412\u044B\u0439\u0442\u0438"
+					),
+					React.createElement(
+						"h1",
+						null,
+						"\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u043F\u0438\u0441\u0430\u0442\u0435\u043B\u044F"
+					)
 				),
 				React.createElement(
 					"form",
