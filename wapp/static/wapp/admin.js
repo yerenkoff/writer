@@ -14,21 +14,13 @@ var TextField = function (_React$Component) {
 	function TextField(props) {
 		_classCallCheck(this, TextField);
 
-		var _this = _possibleConstructorReturn(this, (TextField.__proto__ || Object.getPrototypeOf(TextField)).call(this, props));
-
-		_this.textInput = React.createRef();
-		return _this;
+		return _possibleConstructorReturn(this, (TextField.__proto__ || Object.getPrototypeOf(TextField)).call(this, props));
 	}
 
 	_createClass(TextField, [{
-		key: "componentDidMount",
-		value: function componentDidMount() {
-			this.textInput.current.focus();
-		}
-	}, {
 		key: "render",
 		value: function render() {
-			return React.createElement("input", { ref: this.textInput, required: true, autoCorrect: "off", className: "TextField " + this.props.className, "data-index": this.props.index, name: this.props.name, type: "text", placeholder: this.props.labelName });
+			return React.createElement("input", { required: true, autoCorrect: "off", className: "TextField " + this.props.className, "data-index": this.props.index, name: this.props.name, type: "text", placeholder: this.props.labelName });
 		}
 	}]);
 
@@ -78,11 +70,21 @@ var ImagesField = function (_React$Component3) {
 	}
 
 	_createClass(ImagesField, [{
+		key: "handleReset",
+		value: function handleReset() {
+			this.setState({ label: "" });
+		}
+	}, {
 		key: "handleImages",
 		value: function handleImages(e) {
-			this.setState({ label: Object.values(e.target.files).map(function (key) {
+			this.setState({ label: Object.values(e.target.files).length >= 2 ? Object.values(e.target.files).map(function (key) {
 					return key.name;
-				}).join(', ') });
+				}).join(', ') : "Минимум два файла!" });
+			function redLine() {
+				e.target.parentElement.classList.add("redLine");
+				e.target.value = null;
+			}
+			Object.values(e.target.files).length >= 2 ? e.target.parentElement.classList.remove("redLine") : redLine();
 		}
 	}, {
 		key: "render",
@@ -92,7 +94,7 @@ var ImagesField = function (_React$Component3) {
 				{ className: "ImagesField Button" },
 				this.state.label === "" ? this.props.labelName : this.props.labelName + " (" + this.state.label + ")",
 				" ",
-				React.createElement("input", { required: true, onChange: this.handleImages, name: this.props.name, type: "file", multiple: true })
+				React.createElement("input", { accept: "image/*", required: true, onChange: this.handleImages, name: this.props.name, type: "file", multiple: true })
 			);
 		}
 	}]);
@@ -116,6 +118,11 @@ var ImageField = function (_React$Component4) {
 	}
 
 	_createClass(ImageField, [{
+		key: "handleReset",
+		value: function handleReset() {
+			this.setState({ label: "" });
+		}
+	}, {
 		key: "handleImages",
 		value: function handleImages(e) {
 			this.setState({ label: Object.values(e.target.files).map(function (key) {
@@ -130,7 +137,7 @@ var ImageField = function (_React$Component4) {
 				{ className: "ImagesField Button " + this.props.className },
 				this.state.label === "" ? this.props.labelName : this.props.labelName + " (" + this.state.label + ")",
 				" ",
-				React.createElement("input", { required: true, onChange: this.handleImages, "data-index": this.props.index, name: this.props.name, type: "file" })
+				React.createElement("input", { accept: "image/*", required: true, onChange: this.handleImages, "data-index": this.props.index, name: this.props.name, type: "file" })
 			);
 		}
 	}]);
@@ -215,6 +222,8 @@ var NewPost = function (_React$Component6) {
 		_this7.deleteField = _this7.deleteField.bind(_this7);
 		_this7.handleDelete = _this7.handleDelete.bind(_this7);
 		_this7.handleMore = _this7.handleMore.bind(_this7);
+		_this7.imagesField = React.createRef();
+		// this.imageField = {};
 		return _this7;
 	}
 
@@ -249,23 +258,25 @@ var NewPost = function (_React$Component6) {
 			e.preventDefault();
 			var data = new FormData();
 			var inputs = document.getElementsByTagName("input");
-			var info = _defineProperty({}, inputs[0].value, {
-				surname: inputs[1].value,
-				name: inputs[2].value,
-				century: inputs[3].value,
-				dates: inputs[4].value,
-				country: inputs[5].value,
-				rating: inputs[6].value,
-				images: Object.keys(inputs[7].files),
-				bio: {},
-				museums: {},
-				beloved: {}
-			});
+			var info = {
+				"writer": {
+					surname: inputs[0].value,
+					name: inputs[1].value,
+					century: inputs[2].value,
+					dates: inputs[3].value,
+					country: inputs[4].value,
+					rating: inputs[5].value,
+					images: Object.keys(inputs[6].files),
+					bio: {},
+					museums: {},
+					beloved: {}
+				}
+			};
 
 			[].forEach.call(document.getElementsByClassName("categories"), function (el, index) {
 				var counter = 0;
 				[].forEach.call(el.querySelectorAll("input, textarea"), function (inp) {
-					index == 0 ? info[inputs[0].value].bio[counter] = [inp.name, inp.value] : index == 1 ? info[inputs[0].value].museums[counter] = [inp.name, inp.value] : info[inputs[0].value].beloved[counter] = [inp.name, inp.value];
+					index == 0 ? info["writer"].bio[counter] = [inp.name, inp.value] : index == 1 ? info["writer"].museums[counter] = [inp.name, inp.value] : info["writer"].beloved[counter] = [inp.name, inp.value];
 					if (inp.name === "img") {
 						data.append(index == 0 ? 'bioImage' : index == 1 ? 'museumsImage' : 'belovedImage', inp.files[0]);
 					}
@@ -274,9 +285,9 @@ var NewPost = function (_React$Component6) {
 			});
 
 			data.append('info', JSON.stringify(info));
-			Object.keys(inputs[7].files).forEach(function (key) {
+			Object.keys(inputs[6].files).forEach(function (key) {
 
-				data.append('image', inputs[7].files[key]);
+				data.append('image', inputs[6].files[key]);
 			});
 
 			data.append('csrfmiddlewaretoken', token);
@@ -291,6 +302,16 @@ var NewPost = function (_React$Component6) {
 				result = res.data;
 				_this9.setState({ writers: result }, function () {});
 			});
+			document.getElementById("NewPost").reset();
+			this.imagesField.current.handleReset();
+			// Object.keys(this.imageField).forEach((key) => {
+			// 	console.log(this.imageField[key]);
+			// 	this.imageField[key] != null && this.imageField[key].handleReset();
+			// });
+			// ref={(ref) => this.imageField[`bio${index}`] = ref} 
+			this.setState({ 'bio': [] });
+			this.setState({ 'museums': [] });
+			this.setState({ 'beloved': [] });
 		}
 	}, {
 		key: "addField",
@@ -299,6 +320,7 @@ var NewPost = function (_React$Component6) {
 			var field = [e.target.value];
 			var fields = this.state[e.target.name].slice().concat(field);
 			this.setState(_defineProperty({}, e.target.name, fields));
+			console.log(this.imageField);
 		}
 	}, {
 		key: "deleteField",
@@ -352,14 +374,13 @@ var NewPost = function (_React$Component6) {
 				React.createElement(
 					"form",
 					{ id: "NewPost", action: "", type: "post", onSubmit: this.handleClick },
-					React.createElement(TextField, { labelName: "ID" }),
 					React.createElement(TextField, { labelName: "\u0424\u0430\u043C\u0438\u043B\u0438\u044F" }),
 					React.createElement(TextField, { labelName: "\u0418\u043C\u044F" }),
 					React.createElement(TextField, { labelName: "\u0412\u0435\u043A" }),
 					React.createElement(TextField, { labelName: "\u0413\u043E\u0434\u044B \u0436\u0438\u0437\u043D\u0438" }),
 					React.createElement(TextField, { labelName: "C\u0442\u0440\u0430\u043D\u0430" }),
 					React.createElement(TextField, { labelName: "\u041E\u0446\u0435\u043D\u043A\u0430" }),
-					React.createElement(ImagesField, { labelName: "\u041A\u0430\u0440\u0442\u0438\u043D\u043A\u0438" }),
+					React.createElement(ImagesField, { ref: this.imagesField, labelName: "\u041A\u0430\u0440\u0442\u0438\u043D\u043A\u0438" }),
 					React.createElement(
 						"div",
 						{ className: "categories" },

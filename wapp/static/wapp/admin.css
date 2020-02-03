@@ -4,6 +4,9 @@
   -webkit-tap-highlight-color: transparent;
   outline: 0; }
 
+.redLine {
+  border-bottom: 2px solid #aa0000 !important; }
+
 html, body {
   height: 100%; }
 
@@ -46,8 +49,9 @@ h1 {
 
 .TextField {
   display: block;
+  font-size: 0.9em;
   line-height: 40px;
-  border: 2px solid #222;
+  border: 2px solid #aaa;
   width: 100%;
   box-sizing: border-box;
   padding: 0 5px;
@@ -60,9 +64,14 @@ h1 {
   text-decoration: none !important;
   position: relative;
   z-index: 9;
-  margin-bottom: 10px; }
+  margin-bottom: 10px;
+  transition: .3s; }
   .TextField::placeholder {
     font-size: 0.9rem;
+    color: #222; }
+  .TextField:focus {
+    border: 2px solid #222; }
+  .TextField:focus::placeholder {
     color: #aaa; }
 
 h2 {
@@ -135,6 +144,17 @@ h2 {
     margin-bottom: 0;
     resize: none;
     padding-right: 40px; }
+  .addedField .TextAreaField {
+    line-height: 25px;
+    scrollbar-width: thin;
+    padding-top: 6px; }
+    .addedField .TextAreaField::-webkit-scrollbar {
+      width: 2px;
+      background: transparent; }
+    .addedField .TextAreaField::-webkit-scrollbar-thumb {
+      background: #aaa; }
+    .addedField .TextAreaField:hover::-webkit-scrollbar-thumb {
+      background: #222; }
   .addedField .TextAreaField + button {
     height: 44px !important; }
 

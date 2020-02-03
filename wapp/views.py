@@ -12,9 +12,9 @@ def index(request):
 	global moreCounter
 	moreCounter = 6
 	info = {}
-	for i in Writer.objects.all().order_by('-id')[:moreCounter]:
+	for i in Writer.objects.order_by('-id')[:moreCounter]:
 		info = {**info, **i.data}
-	# print(info)
+	print(info)
 	# print(info)
 	context = {
 		'data': json.dumps(info),
@@ -31,11 +31,14 @@ def admin(request):
 	global moreCounter
 	moreCounter = 6
 	info = {}
-	for i in Writer.objects.all().order_by('-id')[:moreCounter]:
+	for i in Writer.objects.order_by('-id')[:moreCounter]:
 		info = {**info, **i.data}
-		print(len(Writer.objects.all()))
-	print(moreCounter)
-	print(len(Writer.objects.all()) <= moreCounter)
+	# a = Writer.objects.order_by('id')[1]
+	print(info)
+	# for i in Image.objects.filter(writer=a):
+	# 	print(i.image.url)
+	for i in Writer.objects.order_by('-id'):
+		print(list(i.data.keys())[0])
 	context = {
 		'data': json.dumps(info),
 		'moreCounter': len(Writer.objects.all()) <= moreCounter,
@@ -83,6 +86,10 @@ def more(request):
 	# for i in Writer.objects.all().order_by('-id'):
 	# 	data = {**data, **i.data}
 	# print(info)
+	a = Writer.objects.order_by('id')[4]
+	print(list(a.data.keys())[0])
+	for i in Image.objects.filter(writer=a):
+		print(i.image.url)
 	# z = {**Writer.objects.order_by('-id')[0].data, **Writer.objects.order_by('-id')[1].data}
 	print("COUNTER", len(Writer.objects.all()) <= moreCounter)
 	response_data = {
@@ -126,6 +133,7 @@ def newPost(request):
 		image = Image(writer=writer, section="beloved", image=i)
 		image.save()
 	info = json.loads(request.POST.get("info"))
+	info["writer"+str(writer.id)] = info.pop("writer")
 	# print("-------------------")
 	# print(info)
 	# print(request.FILES.getlist('image')[0])
@@ -134,6 +142,7 @@ def newPost(request):
 	# 	print(i.image.url)
 	# print(info[list(info)[0]]['museums'])
 	# print("-------------------")
+
 	for i in info[list(info)[0]]['images']:
 		print("LIST INFO: ")
 		info[list(info)[0]]['images'][int(i)] = Image.objects.filter(writer=writer).filter(section="images")[int(i)].image.url
@@ -173,7 +182,7 @@ def newPost(request):
 	# Writer.objects.order_by('-id')[0].update(data__gogol__name='Steve')
 	# writers = []
 	data = {}
-	for i in Writer.objects.all().order_by('-id'):
+	for i in Writer.objects.order_by('-id'):
 		data = {**data, **i.data}
 	# print(info)
 	# z = {**Writer.objects.order_by('-id')[0].data, **Writer.objects.order_by('-id')[1].data}

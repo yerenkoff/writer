@@ -42,7 +42,7 @@ h1 {
 .LiveSearch {
   display: block;
   line-height: 40px;
-  border: 2px solid #222;
+  border: 2px solid #aaa;
   width: 100%;
   box-sizing: border-box;
   padding: 0 5px;
@@ -54,9 +54,14 @@ h1 {
   text-decoration: none !important;
   position: relative;
   z-index: 9;
-  margin-bottom: 10px; }
+  margin-bottom: 10px;
+  transition: .3s; }
   .LiveSearch::placeholder {
     font-size: 0.9rem;
+    color: #222; }
+  .LiveSearch:focus {
+    border: 2px solid #222; }
+  .LiveSearch:focus::placeholder {
     color: #aaa; }
 
 .SearchResults {

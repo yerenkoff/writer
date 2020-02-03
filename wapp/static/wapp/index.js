@@ -319,7 +319,7 @@ var Writer = function (_React$Component10) {
             "ul",
             null,
             this.props.circles.map(function (key, index) {
-              return index === _this15.props.edge % 3 ? React.createElement(
+              return index === _this15.props.edge % _this15.props.circles.length ? React.createElement(
                 "li",
                 { key: index, className: "activeCircle" },
                 "\u2B24"
@@ -382,7 +382,7 @@ var App = function (_React$Component11) {
       sortParameter: 'country',
       writer: Object.keys(info)[0],
       edge: 0,
-      circles: [0, 1, 2],
+      circles: Array(info[Object.keys(info)[0]].images.length).fill(null),
       moreCounter: moreCounter
     };
 

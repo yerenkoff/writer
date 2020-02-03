@@ -1,18 +1,21 @@
 $black: #222
 $white: #fff
 $gray: #aaa
-$light: #dedede
-$dark: #f0f0f0
+$dark: #dedede
+$light: #f0f0f0
 $bold: 700
 $medium: 500
 $regular: 400
 $thin: 300
+$red: #aa0000
 
 *
 	margin: 0
 	padding: 0
 	-webkit-tap-highlight-color: rgba(0, 0, 0, 0)
 	outline: 0
+.redLine
+	border-bottom: 2px solid $red !important
 html, body
 	height: 100%
 #root
@@ -55,8 +58,9 @@ h1
 	float: left
 .TextField
 	display: block
+	font-size: 0.9em
 	line-height: 40px
-	border: 2px solid $black
+	border: 2px solid $gray
 	width: 100%
 	box-sizing: border-box
 	padding: 0 5px
@@ -70,8 +74,13 @@ h1
 	position: relative
 	z-index: 9
 	margin-bottom: 10px
+	transition: .3s
 	&::placeholder
 		font-size: 0.9rem
+		color: $black
+	&:focus
+		border: 2px solid $black
+	&:focus::placeholder
 		color: $gray
 h2
 	font-size: 1.2em
@@ -81,7 +90,7 @@ h2
 	margin-bottom: 10px
 .Button
 	cursor: pointer
-	background: $dark
+	background: $light
 	border: 0px solid $black
 	padding: 0 5px
 	user-select: none
@@ -102,7 +111,7 @@ h2
 	text-overflow: ellipsis
 	overflow: hidden
 	&:hover
-		background: $light
+		background: $dark
 	input
 		width: 1px
 		opacity: 0
@@ -140,14 +149,23 @@ h2
 			z-index: 9
 			top: 0
 			right: 0
-			// border-radius: 10px
 	.TextField
-		// width: calc(100% - 75px)
 		margin-right: 5px
 		float: left
 		margin-bottom: 0
 		resize: none
 		padding-right: 40px
+	.TextAreaField
+		line-height: 25px
+		scrollbar-width: thin
+		padding-top: 6px
+		&::-webkit-scrollbar
+			width: 2px
+			background: transparent
+		&::-webkit-scrollbar-thumb
+			background: $gray
+		&:hover::-webkit-scrollbar-thumb
+			background: $black
 	.TextAreaField + button
 		height: 44px !important
 
