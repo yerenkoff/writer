@@ -328,6 +328,7 @@ var NewPost = function (_React$Component6) {
 				result = res.data;
 				_this9.setState({ writers: result, moreCounter: res.moreCounter }, function () {});
 			});
+			document.getElementById("NewPost").reset();
 			this.imagesField.current.handleReset();
 			this.setState({ h3Object: {} });
 			this.setState({ pObject: {} });
