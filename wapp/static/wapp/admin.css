@@ -68,7 +68,7 @@ h1 {
   transition: .3s; }
   .TextField::placeholder {
     font-size: 0.9rem;
-    color: #222; }
+    color: #aaa; }
   .TextField:focus {
     border: 2px solid #222; }
   .TextField:focus::placeholder {
@@ -122,9 +122,11 @@ h2 {
       margin: 0; }
 
 .addedField {
+  background: #ccc;
   overflow: hidden;
   margin-bottom: 10px;
-  position: relative; }
+  position: relative;
+  transition: .3s; }
   .addedField .Button:first-child {
     width: 100%;
     margin-right: 5px;
@@ -139,8 +141,7 @@ h2 {
     top: 0;
     right: 0; }
   .addedField .TextField {
-    margin-right: 5px;
-    float: left;
+    box-sizing: border-box;
     margin-bottom: 0;
     resize: none;
     padding-right: 40px; }
@@ -159,12 +160,15 @@ h2 {
     height: 44px !important; }
 
 .categories {
-  margin: 20px 0; }
+  padding: 10px 0; }
 
 .submitButton {
   display: block;
   margin: 40px auto 0;
-  border-bottom: 2px solid #aaa; }
+  border-bottom: 2px solid #aaa;
+  transition: .3s; }
+  .submitButton:hover {
+    border-bottom: 2px solid #222; }
 
 .WritersList {
   overflow: hidden;
@@ -190,8 +194,9 @@ h2 {
       height: 98px;
       object-fit: cover;
       margin-right: 5px;
-      border: 2px solid #222;
-      box-sizing: border-box; }
+      border: 2px solid #aaa;
+      box-sizing: border-box;
+      transition: .3s; }
     .WritersList section h4 {
       font-weight: 500;
       font-size: 1em;

@@ -21,7 +21,7 @@ var LiveSearch = function (_React$Component) {
   _createClass(LiveSearch, [{
     key: "render",
     value: function render() {
-      return React.createElement("input", { onChange: this.props.onChange, onFocus: this.props.onFocus, autoCorrect: "off", className: "LiveSearch", type: "text", placeholder: '"...' + info[Object.keys(info)[0]].surname + '!"' });
+      return React.createElement("input", { onChange: this.props.onChange, onFocus: this.props.onFocus, autoCorrect: "off", className: "LiveSearch", type: "text", placeholder: '"Найди хотя бы Гоголя!"' });
     }
   }]);
 
@@ -443,9 +443,10 @@ var App = function (_React$Component11) {
         tex1: PIXI.Texture.from(info[this.state.writer].images[1]),
         progress: 0,
         u_time: 0,
-        indexy: document.getElementsByClassName("WritersPreview")[0].offsetWidth / 400 > 1 ? document.getElementsByClassName("WritersPreview")[0].offsetWidth / 400 * 0.1 : 0
+        indexy: document.getElementsByClassName("WritersPreview")[0].offsetWidth / 400 > 1 ? document.getElementsByClassName("WritersPreview")[0].offsetWidth / 400 * 0.1 : 0,
+        indexx: document.getElementsByClassName("WritersPreview")[0].offsetWidth / 400 < 0.9 ? 400 / document.getElementsByClassName("WritersPreview")[0].offsetWidth * 0.1 : 0
       };
-
+      console.log(document.getElementsByClassName("WritersPreview")[0].offsetWidth / 400);
       var plane = new Mesh(document.getElementsByClassName("WritersPreview")[0], document.getElementById("c"), planeUniforms, document.getElementById("vertexShader").textContent, document.getElementById("fragmentPlane").textContent);
       var that = this;
       var ad = 0;
@@ -577,7 +578,11 @@ var App = function (_React$Component11) {
         document.getElementsByClassName('container')[0].style.opacity = 0;
       }, 300);
       setTimeout(function () {
-        _this20.setState({ writer: writer });
+        _this20.setState({ writer: writer }, function () {
+          return _this20.setState({ circles: Array(info[_this20.state.writer].images.length).fill(null) }, function () {
+            console.log(_this20.state.writer, info[_this20.state.writer].images.length, _this20.state.circles);
+          });
+        });
         document.getElementsByClassName('Writer')[0].style.display = "block";
       }, 300);
       setTimeout(function () {

@@ -20,7 +20,7 @@ var TextField = function (_React$Component) {
 	_createClass(TextField, [{
 		key: "render",
 		value: function render() {
-			return React.createElement("input", { required: true, autoCorrect: "off", className: "TextField " + this.props.className, "data-index": this.props.index, name: this.props.name, type: "text", placeholder: this.props.labelName });
+			return React.createElement("input", { value: this.props.val, ref: this.props.inputRef, autoFocus: true, required: true, autoCorrect: "off", className: "TextField " + this.props.className, name: this.props.name, type: "text", placeholder: this.props.labelName, onChange: this.props.onChange });
 		}
 	}]);
 
@@ -47,7 +47,7 @@ var TextAreaField = function (_React$Component2) {
 	}, {
 		key: "render",
 		value: function render() {
-			return React.createElement("textarea", { ref: this.textInput, required: true, autoCorrect: "off", className: "TextField " + this.props.className, "data-index": this.props.index, name: this.props.name, cols: "30", rows: "5", placeholder: this.props.labelName });
+			return React.createElement("textarea", { ref: this.textInput, required: true, onChange: this.props.onChange, autoCorrect: "off", className: "TextField " + this.props.className, name: this.props.name, cols: "30", rows: "5", placeholder: this.props.labelName });
 		}
 	}]);
 
@@ -92,7 +92,7 @@ var ImagesField = function (_React$Component3) {
 			return React.createElement(
 				"label",
 				{ className: "ImagesField Button" },
-				this.state.label === "" ? this.props.labelName : this.props.labelName + " (" + this.state.label + ")",
+				this.state.label === "" ? "Картинки" : "Картинки" + " (" + this.state.label + ")",
 				" ",
 				React.createElement("input", { accept: "image/*", required: true, onChange: this.handleImages, name: this.props.name, type: "file", multiple: true })
 			);
@@ -113,18 +113,13 @@ var ImageField = function (_React$Component4) {
 		_this4.state = {
 			label: ""
 		};
-		_this4.handleImages = _this4.handleImages.bind(_this4);
 		return _this4;
 	}
 
 	_createClass(ImageField, [{
-		key: "handleReset",
-		value: function handleReset() {
-			this.setState({ label: "" });
-		}
-	}, {
-		key: "handleImages",
-		value: function handleImages(e) {
+		key: "handleLabel",
+		value: function handleLabel(e) {
+			console.log("handlelabel");
 			this.setState({ label: Object.values(e.target.files).map(function (key) {
 					return key.name;
 				}).join(', ') });
@@ -135,9 +130,9 @@ var ImageField = function (_React$Component4) {
 			return React.createElement(
 				"label",
 				{ className: "ImagesField Button " + this.props.className },
-				this.state.label === "" ? this.props.labelName : this.props.labelName + " (" + this.state.label + ")",
+				this.state.label === "" ? "Картинка" : "Картинка" + " (" + this.state.label + ")",
 				" ",
-				React.createElement("input", { accept: "image/*", required: true, onChange: this.handleImages, "data-index": this.props.index, name: this.props.name, type: "file" })
+				React.createElement("input", { className: "forTest", accept: "image/*", required: true, onChange: this.props.onChange, name: this.props.name, type: "file" })
 			);
 		}
 	}]);
@@ -148,13 +143,30 @@ var ImageField = function (_React$Component4) {
 var WritersList = function (_React$Component5) {
 	_inherits(WritersList, _React$Component5);
 
-	function WritersList() {
+	function WritersList(props) {
 		_classCallCheck(this, WritersList);
 
-		return _possibleConstructorReturn(this, (WritersList.__proto__ || Object.getPrototypeOf(WritersList)).apply(this, arguments));
+		var _this5 = _possibleConstructorReturn(this, (WritersList.__proto__ || Object.getPrototypeOf(WritersList)).call(this, props));
+
+		_this5.handleOver = _this5.handleOver.bind(_this5);
+		_this5.handleLeave = _this5.handleLeave.bind(_this5);
+		return _this5;
 	}
 
+	// The following handlers are for highlighting writers when you hover the cross-delete button
+
+
 	_createClass(WritersList, [{
+		key: "handleOver",
+		value: function handleOver(e) {
+			e.target.parentElement.children[0].style.border = '2px solid #222';
+		}
+	}, {
+		key: "handleLeave",
+		value: function handleLeave(e) {
+			e.target.parentElement.children[0].style.border = '2px solid #aaa';
+		}
+	}, {
 		key: "render",
 		value: function render() {
 			var _this6 = this;
@@ -181,7 +193,7 @@ var WritersList = function (_React$Component5) {
 						),
 						React.createElement(
 							"button",
-							{ className: "Button", value: Object.keys(_this6.props.writers)[index], onClick: _this6.props.handleDelete },
+							{ onMouseOver: _this6.handleOver, onMouseLeave: _this6.handleLeave, className: "Button", value: Object.keys(_this6.props.writers)[index], onClick: _this6.props.handleDelete },
 							"\u2715"
 						)
 					);
@@ -212,22 +224,35 @@ var NewPost = function (_React$Component6) {
 
 		_this7.state = {
 			writers: writers,
-			bio: [],
-			museums: [],
-			beloved: [],
+			h3Object: {},
+			pObject: {},
+			imgObject: {},
+			addedCounter: 0,
 			moreCounter: moreCounter
 		};
 		_this7.handleClick = _this7.handleClick.bind(_this7);
 		_this7.addField = _this7.addField.bind(_this7);
-		_this7.deleteField = _this7.deleteField.bind(_this7);
 		_this7.handleDelete = _this7.handleDelete.bind(_this7);
 		_this7.handleMore = _this7.handleMore.bind(_this7);
 		_this7.imagesField = React.createRef();
-		// this.imageField = {};
+		_this7.rating = React.createRef();
+		_this7.addedFields = {};
+		_this7.imageField = {};
 		return _this7;
 	}
 
+	// This removes focus from Rating input when page loaded
+
+
 	_createClass(NewPost, [{
+		key: "componentDidMount",
+		value: function componentDidMount() {
+			this.rating.current.blur();
+		}
+
+		// Here I convey token and id to delete writer entry
+
+	}, {
 		key: "handleDelete",
 		value: function handleDelete(e) {
 			var _this8 = this;
@@ -246,8 +271,8 @@ var NewPost = function (_React$Component6) {
 				return res.json();
 			}).then(function (res) {
 				result = res.data;
-				_this8.setState({ writers: result });
-				_this8.setState({ moreCounter: res.moreCounter });
+				// moreCounter - true or false - decides when to show "Ещё" button
+				_this8.setState({ writers: result, moreCounter: res.moreCounter });
 			}) : null;
 		}
 	}, {
@@ -285,6 +310,7 @@ var NewPost = function (_React$Component6) {
 			});
 
 			data.append('info', JSON.stringify(info));
+			// Here I convey image files one by one to FormData
 			Object.keys(inputs[6].files).forEach(function (key) {
 
 				data.append('image', inputs[6].files[key]);
@@ -300,35 +326,33 @@ var NewPost = function (_React$Component6) {
 				return res.json();
 			}).then(function (res) {
 				result = res.data;
-				_this9.setState({ writers: result }, function () {});
+				_this9.setState({ writers: result, moreCounter: res.moreCounter }, function () {});
 			});
-			document.getElementById("NewPost").reset();
 			this.imagesField.current.handleReset();
-			// Object.keys(this.imageField).forEach((key) => {
-			// 	console.log(this.imageField[key]);
-			// 	this.imageField[key] != null && this.imageField[key].handleReset();
-			// });
-			// ref={(ref) => this.imageField[`bio${index}`] = ref} 
-			this.setState({ 'bio': [] });
-			this.setState({ 'museums': [] });
-			this.setState({ 'beloved': [] });
+			this.setState({ h3Object: {} });
+			this.setState({ pObject: {} });
+			this.setState({ imgObject: {} });
 		}
 	}, {
 		key: "addField",
 		value: function addField(e) {
+			var _setState;
+
 			e.preventDefault();
-			var field = [e.target.value];
-			var fields = this.state[e.target.name].slice().concat(field);
-			this.setState(_defineProperty({}, e.target.name, fields));
-			console.log(this.imageField);
+			var target = e.target;
+			var newObject = this.state[target.value + "Object"];
+			newObject[this.state.addedCounter] = [target.name, target.value, ''];
+			this.setState((_setState = {}, _defineProperty(_setState, target.value + "Object", newObject), _defineProperty(_setState, "addedCounter", this.state.addedCounter + 1), _setState));
 		}
 	}, {
 		key: "deleteField",
-		value: function deleteField(e) {
+		value: function deleteField(i, e) {
 			e.preventDefault();
-			var fields = this.state[e.target.value].slice();
-			fields.splice(e.target.dataset.index, 1);
-			this.setState(_defineProperty({}, e.target.value, fields));
+			var target = e.target;
+			var newObject = this.state[target.name + "Object"];
+			delete newObject[i];
+			this.setState(_defineProperty({}, target.name + "Object", newObject));
+			target.name === "img" && this.setState({ label: '' });
 		}
 	}, {
 		key: "handleMore",
@@ -348,6 +372,15 @@ var NewPost = function (_React$Component6) {
 		key: "handleExit",
 		value: function handleExit() {
 			location.href = "/exit/";
+		}
+	}, {
+		key: "handleChange",
+		value: function handleChange(i, e) {
+			var target = e.target;
+			var newObject = this.state[target.name + "Object"];
+			newObject[i][2] = target.value;
+			this.setState(_defineProperty({}, target.name + "Object", newObject));
+			e.target.files != null && this.imageField[i].handleLabel(e);
 		}
 	}, {
 		key: "render",
@@ -379,8 +412,8 @@ var NewPost = function (_React$Component6) {
 					React.createElement(TextField, { labelName: "\u0412\u0435\u043A" }),
 					React.createElement(TextField, { labelName: "\u0413\u043E\u0434\u044B \u0436\u0438\u0437\u043D\u0438" }),
 					React.createElement(TextField, { labelName: "C\u0442\u0440\u0430\u043D\u0430" }),
-					React.createElement(TextField, { labelName: "\u041E\u0446\u0435\u043D\u043A\u0430" }),
-					React.createElement(ImagesField, { ref: this.imagesField, labelName: "\u041A\u0430\u0440\u0442\u0438\u043D\u043A\u0438" }),
+					React.createElement(TextField, { inputRef: this.rating, labelName: "\u041E\u0446\u0435\u043D\u043A\u0430" }),
+					React.createElement(ImagesField, { ref: this.imagesField }),
 					React.createElement(
 						"div",
 						{ className: "categories" },
@@ -408,17 +441,37 @@ var NewPost = function (_React$Component6) {
 								"+\u041A\u0430\u0440\u0442\u0438\u043D\u043A\u0430"
 							)
 						),
-						this.state.bio.map(function (name, index) {
-							return React.createElement(
+						Array(this.state.addedCounter).fill(null).map(function (name, index) {
+							return _this11.state.h3Object[index] ? _this11.state.h3Object[index][0] === "bio" ? React.createElement(
 								"section",
 								{ key: index, className: "addedField" },
-								name === "img" ? React.createElement(ImageField, { index: index, labelName: "\u041A\u0430\u0440\u0442\u0438\u043D\u043A\u0430", name: name }) : name === "h3" ? React.createElement(TextField, { index: index, labelName: "\u0417\u0430\u0433\u043E\u043B\u043E\u0432\u043E\u043A", name: name }) : React.createElement(TextAreaField, { className: "TextAreaField", index: index, labelName: "\u041F\u0430\u0440\u0430\u0433\u0440\u0430\u0444", name: name }),
+								React.createElement(TextField, { val: _this11.state.h3Object[index][2], onChange: _this11.handleChange.bind(_this11, index), index: index, labelName: "\u0417\u0430\u0433\u043E\u043B\u043E\u0432\u043E\u043A", name: _this11.state.h3Object[index][1] }),
 								React.createElement(
 									"button",
-									{ className: "Button", onClick: _this11.deleteField, value: "bio", "data-index": index },
+									{ name: _this11.state.h3Object[index][1], className: "Button", onClick: _this11.deleteField.bind(_this11, index), value: "bio", "data-index": index },
 									"\u2715"
 								)
-							);
+							) : null : _this11.state.pObject[index] ? _this11.state.pObject[index][0] === "bio" ? React.createElement(
+								"section",
+								{ key: index, className: "addedField" },
+								React.createElement(TextAreaField, { className: "TextAreaField", index: index, onChange: _this11.handleChange.bind(_this11, index), labelName: "\u041F\u0430\u0440\u0430\u0433\u0440\u0430\u0444", name: _this11.state.pObject[index][1] }),
+								React.createElement(
+									"button",
+									{ name: _this11.state.pObject[index][1], className: "Button", onClick: _this11.deleteField.bind(_this11, index), value: "bio", "data-index": index },
+									"\u2715"
+								)
+							) : null : _this11.state.imgObject[index] ? _this11.state.imgObject[index][0] === "bio" ? React.createElement(
+								"section",
+								{ key: index, className: "addedField" },
+								React.createElement(ImageField, { ref: function ref(_ref) {
+										return _this11.imageField["" + index] = _ref;
+									}, onChange: _this11.handleChange.bind(_this11, index), index: index, name: _this11.state.imgObject[index][1] }),
+								React.createElement(
+									"button",
+									{ name: _this11.state.imgObject[index][1], className: "Button", onClick: _this11.deleteField.bind(_this11, index), value: "bio", "data-index": index },
+									"\u2715"
+								)
+							) : null : null;
 						})
 					),
 					React.createElement(
@@ -448,17 +501,37 @@ var NewPost = function (_React$Component6) {
 								"+\u041A\u0430\u0440\u0442\u0438\u043D\u043A\u0430"
 							)
 						),
-						this.state.museums.map(function (name, index) {
-							return React.createElement(
+						Array(this.state.addedCounter).fill(null).map(function (name, index) {
+							return _this11.state.h3Object[index] ? _this11.state.h3Object[index][0] === "museums" ? React.createElement(
 								"section",
 								{ key: index, className: "addedField" },
-								name === "img" ? React.createElement(ImageField, { index: index, labelName: "\u041A\u0430\u0440\u0442\u0438\u043D\u043A\u0430", name: name }) : name === "h3" ? React.createElement(TextField, { index: index, labelName: "\u0417\u0430\u0433\u043E\u043B\u043E\u0432\u043E\u043A", name: name }) : React.createElement(TextAreaField, { className: "TextAreaField", index: index, labelName: "\u041F\u0430\u0440\u0430\u0433\u0440\u0430\u0444", name: name }),
+								React.createElement(TextField, { val: _this11.state.h3Object[index][2], onChange: _this11.handleChange.bind(_this11, index), index: index, labelName: "\u0417\u0430\u0433\u043E\u043B\u043E\u0432\u043E\u043A", name: _this11.state.h3Object[index][1] }),
 								React.createElement(
 									"button",
-									{ className: "Button", onClick: _this11.deleteField, value: "museums", "data-index": index },
+									{ name: _this11.state.h3Object[index][1], className: "Button", onClick: _this11.deleteField.bind(_this11, index), value: "museums", "data-index": index },
 									"\u2715"
 								)
-							);
+							) : null : _this11.state.pObject[index] ? _this11.state.pObject[index][0] === "museums" ? React.createElement(
+								"section",
+								{ key: index, className: "addedField" },
+								React.createElement(TextAreaField, { className: "TextAreaField", index: index, onChange: _this11.handleChange.bind(_this11, index), labelName: "\u041F\u0430\u0440\u0430\u0433\u0440\u0430\u0444", name: _this11.state.pObject[index][1] }),
+								React.createElement(
+									"button",
+									{ name: _this11.state.pObject[index][1], className: "Button", onClick: _this11.deleteField.bind(_this11, index), value: "museums", "data-index": index },
+									"\u2715"
+								)
+							) : null : _this11.state.imgObject[index] ? _this11.state.imgObject[index][0] === "museums" ? React.createElement(
+								"section",
+								{ key: index, className: "addedField" },
+								React.createElement(ImageField, { ref: function ref(_ref2) {
+										return _this11.imageField["" + index] = _ref2;
+									}, onChange: _this11.handleChange.bind(_this11, index), index: index, name: _this11.state.imgObject[index][1] }),
+								React.createElement(
+									"button",
+									{ name: _this11.state.imgObject[index][1], className: "Button", onClick: _this11.deleteField.bind(_this11, index), value: "museums", "data-index": index },
+									"\u2715"
+								)
+							) : null : null;
 						})
 					),
 					React.createElement(
@@ -488,17 +561,37 @@ var NewPost = function (_React$Component6) {
 								"+\u041A\u0430\u0440\u0442\u0438\u043D\u043A\u0430"
 							)
 						),
-						this.state.beloved.map(function (name, index) {
-							return React.createElement(
+						Array(this.state.addedCounter).fill(null).map(function (name, index) {
+							return _this11.state.h3Object[index] ? _this11.state.h3Object[index][0] === "beloved" ? React.createElement(
 								"section",
 								{ key: index, className: "addedField" },
-								name === "img" ? React.createElement(ImageField, { index: index, labelName: "\u041A\u0430\u0440\u0442\u0438\u043D\u043A\u0430", name: name }) : name === "h3" ? React.createElement(TextField, { index: index, labelName: "\u0417\u0430\u0433\u043E\u043B\u043E\u0432\u043E\u043A", name: name }) : React.createElement(TextAreaField, { className: "TextAreaField", index: index, labelName: "\u041F\u0430\u0440\u0430\u0433\u0440\u0430\u0444", name: name }),
+								React.createElement(TextField, { val: _this11.state.h3Object[index][2], onChange: _this11.handleChange.bind(_this11, index), index: index, labelName: "\u0417\u0430\u0433\u043E\u043B\u043E\u0432\u043E\u043A", name: _this11.state.h3Object[index][1] }),
 								React.createElement(
 									"button",
-									{ className: "Button", onClick: _this11.deleteField, value: "beloved", "data-index": index },
+									{ name: _this11.state.h3Object[index][1], className: "Button", onClick: _this11.deleteField.bind(_this11, index), value: "beloved", "data-index": index },
 									"\u2715"
 								)
-							);
+							) : null : _this11.state.pObject[index] ? _this11.state.pObject[index][0] === "beloved" ? React.createElement(
+								"section",
+								{ key: index, className: "addedField" },
+								React.createElement(TextAreaField, { className: "TextAreaField", index: index, onChange: _this11.handleChange.bind(_this11, index), labelName: "\u041F\u0430\u0440\u0430\u0433\u0440\u0430\u0444", name: _this11.state.pObject[index][1] }),
+								React.createElement(
+									"button",
+									{ name: _this11.state.pObject[index][1], className: "Button", onClick: _this11.deleteField.bind(_this11, index), value: "beloved", "data-index": index },
+									"\u2715"
+								)
+							) : null : _this11.state.imgObject[index] ? _this11.state.imgObject[index][0] === "beloved" ? React.createElement(
+								"section",
+								{ key: index, className: "addedField" },
+								React.createElement(ImageField, { ref: function ref(_ref3) {
+										return _this11.imageField["" + index] = _ref3;
+									}, onChange: _this11.handleChange.bind(_this11, index), index: index, name: _this11.state.imgObject[index][1] }),
+								React.createElement(
+									"button",
+									{ name: _this11.state.imgObject[index][1], className: "Button", onClick: _this11.deleteField.bind(_this11, index), value: "beloved", "data-index": index },
+									"\u2715"
+								)
+							) : null : null;
 						})
 					),
 					React.createElement(
