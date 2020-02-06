@@ -368,8 +368,6 @@ var App = function (_React$Component11) {
 
     var _this16 = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
-    _this16.parameters = {};
-
     _this16.state = {
       headerHidden: false,
       sortButtonHidden: false,
@@ -383,7 +381,8 @@ var App = function (_React$Component11) {
       writer: Object.keys(info)[0],
       edge: 0,
       circles: Array(info[Object.keys(info)[0]].images.length).fill(null),
-      moreCounter: moreCounter
+      moreCounter: moreCounter,
+      parameters: {}
     };
 
     _this16.handleFocus = _this16.handleFocus.bind(_this16);
@@ -410,25 +409,25 @@ var App = function (_React$Component11) {
   }, {
     key: "getNewParameters",
     value: function getNewParameters() {
-      var _this17 = this;
-
-      this.parameters["country"] = [];
-      this.parameters["century"] = [];
-      this.parameters["rating"] = [];
+      var newParameters = {};
+      newParameters["country"] = [];
+      newParameters["century"] = [];
+      newParameters["rating"] = [];
       Object.keys(info).map(function (name, index) {
-        return _this17.parameters["country"].includes(info[name]["country"]) ? null : _this17.parameters["country"].push(info[name]["country"]);
+        return newParameters["country"].includes(info[name]["country"]) ? null : newParameters["country"].push(info[name]["country"]);
       });
       Object.keys(info).map(function (name, index) {
-        return _this17.parameters["century"].includes(info[name]["century"]) ? null : _this17.parameters["century"].push(info[name]["century"]);
+        return newParameters["century"].includes(info[name]["century"]) ? null : newParameters["century"].push(info[name]["century"]);
       });
       Object.keys(info).map(function (name, index) {
-        return _this17.parameters["rating"].includes(info[name]["rating"]) ? null : _this17.parameters["rating"].push(info[name]["rating"]);
+        return newParameters["rating"].includes(info[name]["rating"]) ? null : newParameters["rating"].push(info[name]["rating"]);
       });
+      this.setState({ parameters: newParameters });
     }
   }, {
     key: "componentDidMount",
     value: function componentDidMount() {
-      var _this18 = this;
+      var _this17 = this;
 
       this.getNewParameters();
       var newInfo = this.getNewInfo();
@@ -446,7 +445,6 @@ var App = function (_React$Component11) {
         indexy: document.getElementsByClassName("WritersPreview")[0].offsetWidth / 400 > 1 ? document.getElementsByClassName("WritersPreview")[0].offsetWidth / 400 * 0.1 : 0,
         indexx: document.getElementsByClassName("WritersPreview")[0].offsetWidth / 400 < 0.9 ? 400 / document.getElementsByClassName("WritersPreview")[0].offsetWidth * 0.1 : 0
       };
-      console.log(document.getElementsByClassName("WritersPreview")[0].offsetWidth / 400);
       var plane = new Mesh(document.getElementsByClassName("WritersPreview")[0], document.getElementById("c"), planeUniforms, document.getElementById("vertexShader").textContent, document.getElementById("fragmentPlane").textContent);
       var that = this;
       var ad = 0;
@@ -472,7 +470,7 @@ var App = function (_React$Component11) {
 
       plane.app.view.onclick = function () {
 
-        _this18.setState({ edge: _this18.state.edge + 1 });
+        _this17.setState({ edge: _this17.state.edge + 1 });
       };
     }
   }, {
@@ -510,7 +508,7 @@ var App = function (_React$Component11) {
         document.getElementsByClassName("SortList")[0].style.display = "block";
         setTimeout(function () {
           document.getElementsByClassName("SortList")[0].style.marginTop = "5px";
-          document.getElementsByClassName("SortList")[0].style.maxHeight = "40px";
+          document.getElementsByClassName("SortList")[0].style.maxHeight = "44px";
         }, 100);
         setTimeout(function () {
           document.getElementsByClassName("SortList")[0].style.opacity = 1;
@@ -530,9 +528,9 @@ var App = function (_React$Component11) {
   }, {
     key: "showParameters",
     value: function showParameters(action, parameter) {
-      this.setState({ parameter: parameter ? this.parameters[parameter] : this.state.parameter });
+      this.setState({ parameter: parameter ? this.state.parameters[parameter] : this.state.parameter });
       var show = function show() {
-        document.getElementsByClassName("SortParameters")[0].style.marginTop = "5px";document.getElementsByClassName("SortParameters")[0].style.maxHeight = "40px";setTimeout(function () {
+        document.getElementsByClassName("SortParameters")[0].style.marginTop = "5px";document.getElementsByClassName("SortParameters")[0].style.maxHeight = "44px";setTimeout(function () {
           document.getElementsByClassName("SortParameters")[0].style.opacity = 1;
         }, 100);
       };
@@ -547,18 +545,18 @@ var App = function (_React$Component11) {
   }, {
     key: "showWritersPreview",
     value: function showWritersPreview(param) {
-      var _this19 = this;
+      var _this18 = this;
 
       var newInfo = this.getNewInfo().filter(function (writer) {
-        return info[writer][_this19.state.sortParameter] === param;
+        return info[writer][_this18.state.sortParameter] === param;
       });
       var show = function show() {
         document.getElementsByClassName("WritersPreview")[0].style.opacity = 0;
         setTimeout(function () {
-          var newInfo = _this19.getNewInfo().filter(function (writer) {
-            return info[writer][_this19.state.sortParameter] === param;
+          var newInfo = _this18.getNewInfo().filter(function (writer) {
+            return info[writer][_this18.state.sortParameter] === param;
           });
-          _this19.setState({ info: newInfo });
+          _this18.setState({ info: newInfo });
           document.getElementsByClassName("WritersPreview")[0].style.opacity = 1;
         }, 300);
       };
@@ -567,7 +565,7 @@ var App = function (_React$Component11) {
   }, {
     key: "showFull",
     value: function showFull(e) {
-      var _this20 = this;
+      var _this19 = this;
 
       e.stopPropagation();
       var writer = e.target.dataset.surname;
@@ -578,10 +576,8 @@ var App = function (_React$Component11) {
         document.getElementsByClassName('container')[0].style.opacity = 0;
       }, 300);
       setTimeout(function () {
-        _this20.setState({ writer: writer }, function () {
-          return _this20.setState({ circles: Array(info[_this20.state.writer].images.length).fill(null) }, function () {
-            console.log(_this20.state.writer, info[_this20.state.writer].images.length, _this20.state.circles);
-          });
+        _this19.setState({ writer: writer }, function () {
+          return _this19.setState({ circles: Array(info[_this19.state.writer].images.length).fill(null) });
         });
         document.getElementsByClassName('Writer')[0].style.display = "block";
       }, 300);
@@ -616,7 +612,7 @@ var App = function (_React$Component11) {
   }, {
     key: "handleSortButton",
     value: function handleSortButton() {
-      var _this21 = this;
+      var _this20 = this;
 
       this.setState({ sortHeader: "Фильтры" });
       this.showSorting(this.state.sortingHidden);
@@ -630,7 +626,7 @@ var App = function (_React$Component11) {
       if (this.state.info.toString() !== newInfo.toString()) {
         document.getElementsByClassName("WritersPreview")[0].style.opacity = 0;
         setTimeout(function () {
-          _this21.setState({ info: newInfo });
+          _this20.setState({ info: newInfo });
           document.getElementsByClassName("WritersPreview")[0].style.opacity = 1;
         }, 300);
       }
@@ -638,14 +634,14 @@ var App = function (_React$Component11) {
   }, {
     key: "handleSortListButton",
     value: function handleSortListButton(e) {
-      var _this22 = this;
+      var _this21 = this;
 
       var p = e.target.dataset.p;
       this.setState({ sortHeader: e.target.dataset.sort });
       this.showSorting(this.state.sortingHidden);
       setTimeout(function () {
-        _this22.showParameters(_this22.state.parametersHidden, p);
-        _this22.setState({ parametersHidden: !_this22.state.parametersHidden });
+        _this21.showParameters(_this21.state.parametersHidden, p);
+        _this21.setState({ parametersHidden: !_this21.state.parametersHidden });
       }, 300);
     }
   }, {
@@ -661,13 +657,13 @@ var App = function (_React$Component11) {
   }, {
     key: "handleSearchLink",
     value: function handleSearchLink(e) {
-      var _this23 = this;
+      var _this22 = this;
 
       this.showFull(e);
       setTimeout(function () {
         document.getElementsByClassName("SearchResults")[0].style.height = 0;
         document.getElementsByClassName("SearchResults")[0].style.opacity = 0;
-        _this23.setState({ searchResults: [] });
+        _this22.setState({ searchResults: [] });
         document.getElementsByClassName("LiveSearch")[0].value = '';
       }, 600);
       this.setState({ writer: e.target.dataset.surname });
@@ -675,19 +671,20 @@ var App = function (_React$Component11) {
   }, {
     key: "handleMore",
     value: function handleMore() {
-      var _this24 = this;
+      var _this23 = this;
 
       fetch('/more/').then(function (response) {
         return response.json();
       }).then(function (myJson) {
         info = myJson.data;
-        _this24.getNewParameters();
-        var newInfo = _this24.getNewInfo();
-        _this24.setState({ info: newInfo });
-        _this24.setState({ moreCounter: myJson.moreCounter });
+        _this23.getNewParameters();
+        var newInfo = _this23.getNewInfo();
+        _this23.setState({ info: newInfo });
+        _this23.setState({ moreCounter: myJson.moreCounter });
       }).catch(function (error) {
         console.error('There has been a problem with your fetch operation:', error);
       });
+      this.handleSortButton();
     }
   }, {
     key: "render",

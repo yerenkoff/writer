@@ -119,7 +119,6 @@ var ImageField = function (_React$Component4) {
 	_createClass(ImageField, [{
 		key: "handleLabel",
 		value: function handleLabel(e) {
-			console.log("handlelabel");
 			this.setState({ label: Object.values(e.target.files).map(function (key) {
 					return key.name;
 				}).join(', ') });
@@ -228,7 +227,8 @@ var NewPost = function (_React$Component6) {
 			pObject: {},
 			imgObject: {},
 			addedCounter: 0,
-			moreCounter: moreCounter
+			moreCounter: moreCounter,
+			debounce: false
 		};
 		_this7.handleClick = _this7.handleClick.bind(_this7);
 		_this7.addField = _this7.addField.bind(_this7);
@@ -337,34 +337,51 @@ var NewPost = function (_React$Component6) {
 	}, {
 		key: "addField",
 		value: function addField(e) {
-			var _setState;
+			var _setState,
+			    _this10 = this;
 
 			e.preventDefault();
 			var target = e.target;
 			var newObject = this.state[target.value + "Object"];
 			newObject[this.state.addedCounter] = [target.name, target.value, ''];
-			this.setState((_setState = {}, _defineProperty(_setState, target.value + "Object", newObject), _defineProperty(_setState, "addedCounter", this.state.addedCounter + 1), _setState));
+			this.setState((_setState = {}, _defineProperty(_setState, target.value + "Object", newObject), _defineProperty(_setState, "addedCounter", this.state.addedCounter + 1), _defineProperty(_setState, "debounce", true), _setState), function () {
+				setTimeout(function () {
+					_this10.addedFields[Object.keys(_this10.addedFields).length - 1].style.maxHeight = "200px";
+				}, 0);
+				setTimeout(function () {
+					_this10.setState({ debounce: false });
+					// this.addedFields[Object.keys(this.addedFields).length-1].style.marginBottom = "10px";
+					// this.addedFields[Object.keys(this.addedFields).length-1].style.maxHeight = "200px";
+					_this10.addedFields[Object.keys(_this10.addedFields).length - 1].style.opacity = 1;
+				}, 200);
+			});
 		}
 	}, {
 		key: "deleteField",
 		value: function deleteField(i, e) {
+			var _this11 = this;
+
 			e.preventDefault();
 			var target = e.target;
-			var newObject = this.state[target.name + "Object"];
-			delete newObject[i];
-			this.setState(_defineProperty({}, target.name + "Object", newObject));
-			target.name === "img" && this.setState({ label: '' });
+			target.parentElement.style.opacity = 0;
+			target.parentElement.style.maxHeight = "0px";
+			setTimeout(function () {
+				var newObject = _this11.state[target.name + "Object"];
+				delete newObject[i];
+				_this11.setState(_defineProperty({}, target.name + "Object", newObject));
+				target.name === "img" && _this11.setState({ label: '' });
+			}, 300);
 		}
 	}, {
 		key: "handleMore",
 		value: function handleMore() {
-			var _this10 = this;
+			var _this12 = this;
 
 			fetch('/more/').then(function (response) {
 				return response.json();
 			}).then(function (myJson) {
-				_this10.setState({ writers: myJson.data });
-				_this10.setState({ moreCounter: myJson.moreCounter });
+				_this12.setState({ writers: myJson.data });
+				_this12.setState({ moreCounter: myJson.moreCounter });
 			}).catch(function (error) {
 				console.error('There has been a problem with your fetch operation:', error);
 			});
@@ -386,7 +403,7 @@ var NewPost = function (_React$Component6) {
 	}, {
 		key: "render",
 		value: function render() {
-			var _this11 = this;
+			var _this13 = this;
 
 			return React.createElement(
 				"div",
@@ -428,48 +445,54 @@ var NewPost = function (_React$Component6) {
 							{ className: "addField" },
 							React.createElement(
 								"button",
-								{ className: "Button", onClick: this.addField, name: "bio", value: "h3" },
+								{ disabled: this.state.debounce, className: "Button", onClick: this.addField, name: "bio", value: "h3" },
 								"+\u0417\u0430\u0433\u043E\u043B\u043E\u0432\u043E\u043A"
 							),
 							React.createElement(
 								"button",
-								{ className: "Button", onClick: this.addField, name: "bio", value: "p" },
+								{ disabled: this.state.debounce, className: "Button", onClick: this.addField, name: "bio", value: "p" },
 								"+\u041F\u0430\u0440\u0430\u0433\u0440\u0430\u0444"
 							),
 							React.createElement(
 								"button",
-								{ className: "Button", onClick: this.addField, name: "bio", value: "img" },
+								{ disabled: this.state.debounce, className: "Button", onClick: this.addField, name: "bio", value: "img" },
 								"+\u041A\u0430\u0440\u0442\u0438\u043D\u043A\u0430"
 							)
 						),
 						Array(this.state.addedCounter).fill(null).map(function (name, index) {
-							return _this11.state.h3Object[index] ? _this11.state.h3Object[index][0] === "bio" ? React.createElement(
+							return _this13.state.h3Object[index] ? _this13.state.h3Object[index][0] === "bio" ? React.createElement(
 								"section",
-								{ key: index, className: "addedField" },
-								React.createElement(TextField, { val: _this11.state.h3Object[index][2], onChange: _this11.handleChange.bind(_this11, index), index: index, labelName: "\u0417\u0430\u0433\u043E\u043B\u043E\u0432\u043E\u043A", name: _this11.state.h3Object[index][1] }),
+								{ ref: function ref(_ref) {
+										return _this13.addedFields["" + index] = _ref;
+									}, key: index, className: "addedField" },
+								React.createElement(TextField, { val: _this13.state.h3Object[index][2], onChange: _this13.handleChange.bind(_this13, index), index: index, labelName: "\u0417\u0430\u0433\u043E\u043B\u043E\u0432\u043E\u043A", name: _this13.state.h3Object[index][1] }),
 								React.createElement(
 									"button",
-									{ name: _this11.state.h3Object[index][1], className: "Button", onClick: _this11.deleteField.bind(_this11, index), value: "bio", "data-index": index },
+									{ name: _this13.state.h3Object[index][1], className: "Button", onClick: _this13.deleteField.bind(_this13, index), value: "bio", "data-index": index },
 									"\u2715"
 								)
-							) : null : _this11.state.pObject[index] ? _this11.state.pObject[index][0] === "bio" ? React.createElement(
+							) : null : _this13.state.pObject[index] ? _this13.state.pObject[index][0] === "bio" ? React.createElement(
 								"section",
-								{ key: index, className: "addedField" },
-								React.createElement(TextAreaField, { className: "TextAreaField", index: index, onChange: _this11.handleChange.bind(_this11, index), labelName: "\u041F\u0430\u0440\u0430\u0433\u0440\u0430\u0444", name: _this11.state.pObject[index][1] }),
+								{ ref: function ref(_ref2) {
+										return _this13.addedFields["" + index] = _ref2;
+									}, key: index, className: "addedField" },
+								React.createElement(TextAreaField, { className: "TextAreaField", index: index, onChange: _this13.handleChange.bind(_this13, index), labelName: "\u041F\u0430\u0440\u0430\u0433\u0440\u0430\u0444", name: _this13.state.pObject[index][1] }),
 								React.createElement(
 									"button",
-									{ name: _this11.state.pObject[index][1], className: "Button", onClick: _this11.deleteField.bind(_this11, index), value: "bio", "data-index": index },
+									{ name: _this13.state.pObject[index][1], className: "Button", onClick: _this13.deleteField.bind(_this13, index), value: "bio", "data-index": index },
 									"\u2715"
 								)
-							) : null : _this11.state.imgObject[index] ? _this11.state.imgObject[index][0] === "bio" ? React.createElement(
+							) : null : _this13.state.imgObject[index] ? _this13.state.imgObject[index][0] === "bio" ? React.createElement(
 								"section",
-								{ key: index, className: "addedField" },
-								React.createElement(ImageField, { ref: function ref(_ref) {
-										return _this11.imageField["" + index] = _ref;
-									}, onChange: _this11.handleChange.bind(_this11, index), index: index, name: _this11.state.imgObject[index][1] }),
+								{ ref: function ref(_ref4) {
+										return _this13.addedFields["" + index] = _ref4;
+									}, key: index, className: "addedField" },
+								React.createElement(ImageField, { ref: function ref(_ref3) {
+										return _this13.imageField["" + index] = _ref3;
+									}, onChange: _this13.handleChange.bind(_this13, index), index: index, name: _this13.state.imgObject[index][1] }),
 								React.createElement(
 									"button",
-									{ name: _this11.state.imgObject[index][1], className: "Button", onClick: _this11.deleteField.bind(_this11, index), value: "bio", "data-index": index },
+									{ name: _this13.state.imgObject[index][1], className: "Button", onClick: _this13.deleteField.bind(_this13, index), value: "bio", "data-index": index },
 									"\u2715"
 								)
 							) : null : null;
@@ -488,48 +511,54 @@ var NewPost = function (_React$Component6) {
 							{ className: "addField" },
 							React.createElement(
 								"button",
-								{ className: "Button", onClick: this.addField, name: "museums", value: "h3" },
+								{ disabled: this.state.debounce, className: "Button", onClick: this.addField, name: "museums", value: "h3" },
 								"+\u0417\u0430\u0433\u043E\u043B\u043E\u0432\u043E\u043A"
 							),
 							React.createElement(
 								"button",
-								{ className: "Button", onClick: this.addField, name: "museums", value: "p" },
+								{ disabled: this.state.debounce, className: "Button", onClick: this.addField, name: "museums", value: "p" },
 								"+\u041F\u0430\u0440\u0430\u0433\u0440\u0430\u0444"
 							),
 							React.createElement(
 								"button",
-								{ className: "Button", onClick: this.addField, name: "museums", value: "img" },
+								{ disabled: this.state.debounce, className: "Button", onClick: this.addField, name: "museums", value: "img" },
 								"+\u041A\u0430\u0440\u0442\u0438\u043D\u043A\u0430"
 							)
 						),
 						Array(this.state.addedCounter).fill(null).map(function (name, index) {
-							return _this11.state.h3Object[index] ? _this11.state.h3Object[index][0] === "museums" ? React.createElement(
+							return _this13.state.h3Object[index] ? _this13.state.h3Object[index][0] === "museums" ? React.createElement(
 								"section",
-								{ key: index, className: "addedField" },
-								React.createElement(TextField, { val: _this11.state.h3Object[index][2], onChange: _this11.handleChange.bind(_this11, index), index: index, labelName: "\u0417\u0430\u0433\u043E\u043B\u043E\u0432\u043E\u043A", name: _this11.state.h3Object[index][1] }),
+								{ ref: function ref(_ref5) {
+										return _this13.addedFields["" + index] = _ref5;
+									}, key: index, className: "addedField" },
+								React.createElement(TextField, { val: _this13.state.h3Object[index][2], onChange: _this13.handleChange.bind(_this13, index), index: index, labelName: "\u0417\u0430\u0433\u043E\u043B\u043E\u0432\u043E\u043A", name: _this13.state.h3Object[index][1] }),
 								React.createElement(
 									"button",
-									{ name: _this11.state.h3Object[index][1], className: "Button", onClick: _this11.deleteField.bind(_this11, index), value: "museums", "data-index": index },
+									{ name: _this13.state.h3Object[index][1], className: "Button", onClick: _this13.deleteField.bind(_this13, index), value: "museums", "data-index": index },
 									"\u2715"
 								)
-							) : null : _this11.state.pObject[index] ? _this11.state.pObject[index][0] === "museums" ? React.createElement(
+							) : null : _this13.state.pObject[index] ? _this13.state.pObject[index][0] === "museums" ? React.createElement(
 								"section",
-								{ key: index, className: "addedField" },
-								React.createElement(TextAreaField, { className: "TextAreaField", index: index, onChange: _this11.handleChange.bind(_this11, index), labelName: "\u041F\u0430\u0440\u0430\u0433\u0440\u0430\u0444", name: _this11.state.pObject[index][1] }),
+								{ ref: function ref(_ref6) {
+										return _this13.addedFields["" + index] = _ref6;
+									}, key: index, className: "addedField" },
+								React.createElement(TextAreaField, { className: "TextAreaField", index: index, onChange: _this13.handleChange.bind(_this13, index), labelName: "\u041F\u0430\u0440\u0430\u0433\u0440\u0430\u0444", name: _this13.state.pObject[index][1] }),
 								React.createElement(
 									"button",
-									{ name: _this11.state.pObject[index][1], className: "Button", onClick: _this11.deleteField.bind(_this11, index), value: "museums", "data-index": index },
+									{ name: _this13.state.pObject[index][1], className: "Button", onClick: _this13.deleteField.bind(_this13, index), value: "museums", "data-index": index },
 									"\u2715"
 								)
-							) : null : _this11.state.imgObject[index] ? _this11.state.imgObject[index][0] === "museums" ? React.createElement(
+							) : null : _this13.state.imgObject[index] ? _this13.state.imgObject[index][0] === "museums" ? React.createElement(
 								"section",
-								{ key: index, className: "addedField" },
-								React.createElement(ImageField, { ref: function ref(_ref2) {
-										return _this11.imageField["" + index] = _ref2;
-									}, onChange: _this11.handleChange.bind(_this11, index), index: index, name: _this11.state.imgObject[index][1] }),
+								{ ref: function ref(_ref8) {
+										return _this13.addedFields["" + index] = _ref8;
+									}, key: index, className: "addedField" },
+								React.createElement(ImageField, { ref: function ref(_ref7) {
+										return _this13.imageField["" + index] = _ref7;
+									}, onChange: _this13.handleChange.bind(_this13, index), index: index, name: _this13.state.imgObject[index][1] }),
 								React.createElement(
 									"button",
-									{ name: _this11.state.imgObject[index][1], className: "Button", onClick: _this11.deleteField.bind(_this11, index), value: "museums", "data-index": index },
+									{ name: _this13.state.imgObject[index][1], className: "Button", onClick: _this13.deleteField.bind(_this13, index), value: "museums", "data-index": index },
 									"\u2715"
 								)
 							) : null : null;
@@ -548,48 +577,54 @@ var NewPost = function (_React$Component6) {
 							{ className: "addField" },
 							React.createElement(
 								"button",
-								{ className: "Button", onClick: this.addField, name: "beloved", value: "h3" },
+								{ disabled: this.state.debounce, className: "Button", onClick: this.addField, name: "beloved", value: "h3" },
 								"+\u0417\u0430\u0433\u043E\u043B\u043E\u0432\u043E\u043A"
 							),
 							React.createElement(
 								"button",
-								{ className: "Button", onClick: this.addField, name: "beloved", value: "p" },
+								{ disabled: this.state.debounce, className: "Button", onClick: this.addField, name: "beloved", value: "p" },
 								"+\u041F\u0430\u0440\u0430\u0433\u0440\u0430\u0444"
 							),
 							React.createElement(
 								"button",
-								{ className: "Button", onClick: this.addField, name: "beloved", value: "img" },
+								{ disabled: this.state.debounce, className: "Button", onClick: this.addField, name: "beloved", value: "img" },
 								"+\u041A\u0430\u0440\u0442\u0438\u043D\u043A\u0430"
 							)
 						),
 						Array(this.state.addedCounter).fill(null).map(function (name, index) {
-							return _this11.state.h3Object[index] ? _this11.state.h3Object[index][0] === "beloved" ? React.createElement(
+							return _this13.state.h3Object[index] ? _this13.state.h3Object[index][0] === "beloved" ? React.createElement(
 								"section",
-								{ key: index, className: "addedField" },
-								React.createElement(TextField, { val: _this11.state.h3Object[index][2], onChange: _this11.handleChange.bind(_this11, index), index: index, labelName: "\u0417\u0430\u0433\u043E\u043B\u043E\u0432\u043E\u043A", name: _this11.state.h3Object[index][1] }),
+								{ ref: function ref(_ref9) {
+										return _this13.addedFields["" + index] = _ref9;
+									}, key: index, className: "addedField" },
+								React.createElement(TextField, { val: _this13.state.h3Object[index][2], onChange: _this13.handleChange.bind(_this13, index), index: index, labelName: "\u0417\u0430\u0433\u043E\u043B\u043E\u0432\u043E\u043A", name: _this13.state.h3Object[index][1] }),
 								React.createElement(
 									"button",
-									{ name: _this11.state.h3Object[index][1], className: "Button", onClick: _this11.deleteField.bind(_this11, index), value: "beloved", "data-index": index },
+									{ name: _this13.state.h3Object[index][1], className: "Button", onClick: _this13.deleteField.bind(_this13, index), value: "beloved", "data-index": index },
 									"\u2715"
 								)
-							) : null : _this11.state.pObject[index] ? _this11.state.pObject[index][0] === "beloved" ? React.createElement(
+							) : null : _this13.state.pObject[index] ? _this13.state.pObject[index][0] === "beloved" ? React.createElement(
 								"section",
-								{ key: index, className: "addedField" },
-								React.createElement(TextAreaField, { className: "TextAreaField", index: index, onChange: _this11.handleChange.bind(_this11, index), labelName: "\u041F\u0430\u0440\u0430\u0433\u0440\u0430\u0444", name: _this11.state.pObject[index][1] }),
+								{ ref: function ref(_ref10) {
+										return _this13.addedFields["" + index] = _ref10;
+									}, key: index, className: "addedField" },
+								React.createElement(TextAreaField, { className: "TextAreaField", index: index, onChange: _this13.handleChange.bind(_this13, index), labelName: "\u041F\u0430\u0440\u0430\u0433\u0440\u0430\u0444", name: _this13.state.pObject[index][1] }),
 								React.createElement(
 									"button",
-									{ name: _this11.state.pObject[index][1], className: "Button", onClick: _this11.deleteField.bind(_this11, index), value: "beloved", "data-index": index },
+									{ name: _this13.state.pObject[index][1], className: "Button", onClick: _this13.deleteField.bind(_this13, index), value: "beloved", "data-index": index },
 									"\u2715"
 								)
-							) : null : _this11.state.imgObject[index] ? _this11.state.imgObject[index][0] === "beloved" ? React.createElement(
+							) : null : _this13.state.imgObject[index] ? _this13.state.imgObject[index][0] === "beloved" ? React.createElement(
 								"section",
-								{ key: index, className: "addedField" },
-								React.createElement(ImageField, { ref: function ref(_ref3) {
-										return _this11.imageField["" + index] = _ref3;
-									}, onChange: _this11.handleChange.bind(_this11, index), index: index, name: _this11.state.imgObject[index][1] }),
+								{ ref: function ref(_ref12) {
+										return _this13.addedFields["" + index] = _ref12;
+									}, key: index, className: "addedField" },
+								React.createElement(ImageField, { ref: function ref(_ref11) {
+										return _this13.imageField["" + index] = _ref11;
+									}, onChange: _this13.handleChange.bind(_this13, index), index: index, name: _this13.state.imgObject[index][1] }),
 								React.createElement(
 									"button",
-									{ name: _this11.state.imgObject[index][1], className: "Button", onClick: _this11.deleteField.bind(_this11, index), value: "beloved", "data-index": index },
+									{ name: _this13.state.imgObject[index][1], className: "Button", onClick: _this13.deleteField.bind(_this13, index), value: "beloved", "data-index": index },
 									"\u2715"
 								)
 							) : null : null;
