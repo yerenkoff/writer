@@ -6,7 +6,11 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-info = JSON.parse(info);
+// info = JSON.parse(info);
+
+import posts from './posts.js';
+var info = posts;
+
 import Mesh from './mesh.js';
 
 var LiveSearch = function (_React$Component) {
@@ -19,9 +23,9 @@ var LiveSearch = function (_React$Component) {
   }
 
   _createClass(LiveSearch, [{
-    key: "render",
+    key: 'render',
     value: function render() {
-      return React.createElement("input", { onChange: this.props.onChange, onFocus: this.props.onFocus, autoCorrect: "off", className: "LiveSearch", type: "text", placeholder: '"Найди хотя бы Гоголя!"' });
+      return React.createElement('input', { onChange: this.props.onChange, onFocus: this.props.onFocus, autoCorrect: 'off', className: 'LiveSearch', type: 'text', placeholder: 'Найди хотя бы Гоголя..' });
     }
   }]);
 
@@ -38,27 +42,27 @@ var SearchResults = function (_React$Component2) {
   }
 
   _createClass(SearchResults, [{
-    key: "render",
+    key: 'render',
     value: function render() {
       var _this3 = this;
 
       return React.createElement(
-        "section",
-        { className: "SearchResults" },
+        'section',
+        { className: 'SearchResults' },
         React.createElement(
-          "button",
+          'button',
           { onClick: function onClick(e) {
               document.getElementsByClassName("LiveSearch")[0].value = '';_this3.props.onClose(e);
             } },
-          "\u2A2F"
+          '\u2A2F'
         ),
         React.createElement(
-          "ul",
+          'ul',
           null,
           this.props.searchResults.map(function (name, index) {
             return React.createElement(
-              "a",
-              { "data-surname": name[1], key: index, href: "#/", onClick: function onClick(e) {
+              'a',
+              { 'data-surname': name[1], key: index, href: '#/', onClick: function onClick(e) {
                   _this3.props.onClick(e);e.preventDefault();
                 } },
               name[0]
@@ -82,9 +86,9 @@ var SortButton = function (_React$Component3) {
   }
 
   _createClass(SortButton, [{
-    key: "render",
+    key: 'render',
     value: function render() {
-      return React.createElement(Button, { onClick: this.props.onClick, inner: this.props.sortHeader, className: "SortButton" });
+      return React.createElement(Button, { onClick: this.props.onClick, inner: this.props.sortHeader, className: 'SortButton' });
     }
   }]);
 
@@ -101,11 +105,11 @@ var Button = function (_React$Component4) {
   }
 
   _createClass(Button, [{
-    key: "render",
+    key: 'render',
     value: function render() {
       return React.createElement(
-        "button",
-        { id: this.props.id, "data-sort": this.props.sort, "data-p": this.props.p, onClick: this.props.onClick, className: "Button " + this.props.className },
+        'button',
+        { id: this.props.id, 'data-sort': this.props.sort, 'data-p': this.props.p, onClick: this.props.onClick, className: "Button " + this.props.className },
         this.props.inner
       );
     }
@@ -124,14 +128,14 @@ var SortList = function (_React$Component5) {
   }
 
   _createClass(SortList, [{
-    key: "render",
+    key: 'render',
     value: function render() {
       return React.createElement(
-        "ul",
-        { className: "SortList" },
-        React.createElement(Button, { p: "country", sort: "\u0412\u044B\u0431\u0435\u0440\u0438 \u0441\u0442\u0440\u0430\u043D\u0443", onClick: this.props.onClick, inner: "\u0421\u0442\u0440\u0430\u043D\u0430", className: "SortListButton" }),
-        React.createElement(Button, { p: "century", sort: "\u0412\u044B\u0431\u0435\u0440\u0438 \u0432\u0435\u043A", onClick: this.props.onClick, inner: "\u0412\u0435\u043A", className: "SortListButton" }),
-        React.createElement(Button, { p: "rating", sort: "\u0412\u044B\u0431\u0435\u0440\u0438 \u043E\u0446\u0435\u043D\u043A\u0443", onClick: this.props.onClick, inner: "\u041E\u0446\u0435\u043D\u043A\u0430", className: "SortListButton" })
+        'ul',
+        { className: 'SortList' },
+        React.createElement(Button, { p: 'country', sort: '\u0412\u044B\u0431\u0435\u0440\u0438 \u0441\u0442\u0440\u0430\u043D\u0443', onClick: this.props.onClick, inner: '\u0421\u0442\u0440\u0430\u043D\u0430', className: 'SortListButton' }),
+        React.createElement(Button, { p: 'century', sort: '\u0412\u044B\u0431\u0435\u0440\u0438 \u0432\u0435\u043A', onClick: this.props.onClick, inner: '\u0412\u0435\u043A', className: 'SortListButton' }),
+        React.createElement(Button, { p: 'rating', sort: '\u0412\u044B\u0431\u0435\u0440\u0438 \u043E\u0446\u0435\u043D\u043A\u0443', onClick: this.props.onClick, inner: '\u041E\u0446\u0435\u043D\u043A\u0430', className: 'SortListButton' })
       );
     }
   }]);
@@ -149,13 +153,13 @@ var SortParameters = function (_React$Component6) {
   }
 
   _createClass(SortParameters, [{
-    key: "render",
+    key: 'render',
     value: function render() {
       var _this8 = this;
 
       return React.createElement(
-        "ul",
-        { className: "SortParameters" },
+        'ul',
+        { className: 'SortParameters' },
         this.props.parameter.map(function (p, index) {
           return React.createElement(Button, { key: index, inner: p, onClick: _this8.props.onClick });
         })
@@ -176,11 +180,11 @@ var H2 = function (_React$Component7) {
   }
 
   _createClass(H2, [{
-    key: "render",
+    key: 'render',
     value: function render() {
       return React.createElement(
-        "h2",
-        { className: "H2" },
+        'h2',
+        { className: 'H2' },
         this.props.inner
       );
     }
@@ -199,11 +203,11 @@ var H4 = function (_React$Component8) {
   }
 
   _createClass(H4, [{
-    key: "render",
+    key: 'render',
     value: function render() {
       return React.createElement(
-        "h4",
-        { onClick: this.props.onClick, className: "H4" },
+        'h4',
+        { onClick: this.props.onClick, className: 'H4' },
         this.props.inner
       );
     }
@@ -222,38 +226,38 @@ var WritersPreview = function (_React$Component9) {
   }
 
   _createClass(WritersPreview, [{
-    key: "render",
+    key: 'render',
     value: function render() {
       var _this12 = this;
 
       return React.createElement(
-        "main",
-        { className: "WritersPreview" },
+        'main',
+        { className: 'WritersPreview' },
         this.props.writers.map(function (key, index) {
           return React.createElement(
-            "section",
-            { onClick: _this12.props.onClick, style: { backgroundImage: "url(" + info[key].images[0] + ")" }, key: index, className: "WriterPreview", "data-surname": key },
+            'section',
+            { onClick: _this12.props.onClick, style: { backgroundImage: "url(" + info[key].images[0] + ")" }, key: index, className: 'WriterPreview', 'data-surname': key },
             React.createElement(
-              "div",
+              'div',
               { onClick: function onClick(e) {
                   e.stopPropagation();
-                }, className: "WriterPreviewInfo" },
+                }, className: 'WriterPreviewInfo' },
               React.createElement(H2, { inner: info[key].surname }),
               React.createElement(H4, { key: index, inner: info[key].dates })
             ),
             React.createElement(H4, { onClick: function onClick(e) {
                 e.stopPropagation();
               }, key: index, inner: [info[key].rating, React.createElement(
-                "span",
+                'span',
                 { key: index },
-                "\u2605"
+                '\u2605'
               )] })
           );
         }),
-        !this.props.moreCounter && React.createElement(
-          "div",
-          { className: "moreButtonCont" },
-          React.createElement(Button, { onClick: this.props.moreButton, id: "moreButton", inner: "\u0415\u0449\u0451" })
+        false && this.props.parameters && !this.props.moreCounter && React.createElement(
+          'div',
+          { className: 'moreButtonCont' },
+          React.createElement(Button, { onClick: this.props.moreButton, id: 'moreButton', inner: '\u0415\u0449\u0451' })
         )
       );
     }
@@ -283,7 +287,7 @@ var Writer = function (_React$Component10) {
   }
 
   _createClass(Writer, [{
-    key: "handleAbout",
+    key: 'handleAbout',
     value: function handleAbout(e) {
       var _this14 = this;
 
@@ -300,55 +304,55 @@ var Writer = function (_React$Component10) {
       this.change = this.state.aboutOption === parameter ? 0 : show();
     }
   }, {
-    key: "render",
+    key: 'render',
     value: function render() {
       var _this15 = this;
 
       return React.createElement(
-        "section",
-        { className: "Writer" },
+        'section',
+        { className: 'Writer' },
         React.createElement(
-          "section",
-          { className: "WriterBackground" },
+          'section',
+          { className: 'WriterBackground' },
           React.createElement(
-            "div",
-            { className: "back", onClick: this.props.onClick },
-            React.createElement("img", { src: back, alt: "" })
+            'div',
+            { className: 'back', onClick: this.props.onClick },
+            React.createElement('img', { src: back, alt: '' })
           ),
           React.createElement(
-            "ul",
+            'ul',
             null,
             this.props.circles.map(function (key, index) {
               return index === _this15.props.edge % _this15.props.circles.length ? React.createElement(
-                "li",
-                { key: index, className: "activeCircle" },
-                "\u2B24"
+                'li',
+                { key: index, className: 'activeCircle' },
+                '\u2B24'
               ) : React.createElement(
-                "li",
+                'li',
                 { key: index },
-                "\u2B24"
+                '\u2B24'
               );
             })
           ),
-          React.createElement(H4, { key: "0", inner: [info[this.props.writer].rating, React.createElement(
-              "span",
-              { key: "1" },
-              "\u2605"
+          React.createElement(H4, { key: '0', inner: [info[this.props.writer].rating, React.createElement(
+              'span',
+              { key: '1' },
+              '\u2605'
             )] }),
-          React.createElement("canvas", { id: "c" })
+          React.createElement('canvas', { id: 'c' })
         ),
-        React.createElement(H4, { key: "2", inner: info[this.props.writer].name }),
+        React.createElement(H4, { key: '2', inner: info[this.props.writer].name }),
         React.createElement(H2, { ref: this.plane, inner: info[this.props.writer].surname }),
         React.createElement(
-          "ul",
+          'ul',
           null,
-          React.createElement(Button, { p: "bio", onClick: this.handleAbout, inner: "\u0411\u0438\u043E" }),
-          React.createElement(Button, { p: "museums", onClick: this.handleAbout, inner: "\u041C\u0443\u0437\u0435\u0438" }),
-          React.createElement(Button, { p: "beloved", onClick: this.handleAbout, inner: "\u042F \u043B\u044E\u0431\u043B\u044E" })
+          React.createElement(Button, { p: 'bio', onClick: this.handleAbout, inner: '\u0411\u0438\u043E' }),
+          React.createElement(Button, { p: 'museums', onClick: this.handleAbout, inner: '\u041C\u0443\u0437\u0435\u0438' }),
+          React.createElement(Button, { p: 'beloved', onClick: this.handleAbout, inner: '\u041A\u043D\u0438\u0433\u0438' })
         ),
         React.createElement(
-          "div",
-          { className: "about" },
+          'div',
+          { className: 'about' },
           Object.keys(info[this.props.writer][this.state.aboutOption]).map(function (name, index) {
             return React.createElement(info[_this15.props.writer][_this15.state.aboutOption][name][0], { key: index, src: info[_this15.props.writer][_this15.state.aboutOption][name][0] === "img" ? info[_this15.props.writer][_this15.state.aboutOption][name][1] : null }, info[_this15.props.writer][_this15.state.aboutOption][name][0] === "img" ? null : info[_this15.props.writer][_this15.state.aboutOption][name][1]);
           })
@@ -382,7 +386,8 @@ var App = function (_React$Component11) {
       edge: 0,
       circles: Array(info[Object.keys(info)[0]].images.length).fill(null),
       moreCounter: moreCounter,
-      parameters: {}
+      parameters: {},
+      showMore: true
     };
 
     _this16.handleFocus = _this16.handleFocus.bind(_this16);
@@ -398,7 +403,7 @@ var App = function (_React$Component11) {
   }
 
   _createClass(App, [{
-    key: "getNewInfo",
+    key: 'getNewInfo',
     value: function getNewInfo() {
       var newInfo = [];
       Object.keys(info).map(function (key) {
@@ -407,7 +412,7 @@ var App = function (_React$Component11) {
       return newInfo;
     }
   }, {
-    key: "getNewParameters",
+    key: 'getNewParameters',
     value: function getNewParameters() {
       var newParameters = {};
       newParameters["country"] = [];
@@ -425,7 +430,7 @@ var App = function (_React$Component11) {
       this.setState({ parameters: newParameters });
     }
   }, {
-    key: "componentDidMount",
+    key: 'componentDidMount',
     value: function componentDidMount() {
       var _this17 = this;
 
@@ -442,8 +447,8 @@ var App = function (_React$Component11) {
         tex1: PIXI.Texture.from(info[this.state.writer].images[1]),
         progress: 0,
         u_time: 0,
-        indexy: document.getElementsByClassName("WritersPreview")[0].offsetWidth / 400 > 1 ? document.getElementsByClassName("WritersPreview")[0].offsetWidth / 400 * 0.1 : 0,
-        indexx: document.getElementsByClassName("WritersPreview")[0].offsetWidth / 400 < 0.9 ? 400 / document.getElementsByClassName("WritersPreview")[0].offsetWidth * 0.1 : 0
+        indexy: document.getElementsByClassName("WritersPreview")[0].offsetWidth / 400 > 1 ? document.getElementsByClassName("WritersPreview")[0].offsetWidth / 400 * 0.1 : 0
+        // indexx: document.getElementsByClassName("WritersPreview")[0].offsetWidth / 400 < 0.9 ? (400 / document.getElementsByClassName("WritersPreview")[0].offsetWidth) * 0.1 : 0,
       };
       var plane = new Mesh(document.getElementsByClassName("WritersPreview")[0], document.getElementById("c"), planeUniforms, document.getElementById("vertexShader").textContent, document.getElementById("fragmentPlane").textContent);
       var that = this;
@@ -474,7 +479,7 @@ var App = function (_React$Component11) {
       };
     }
   }, {
-    key: "handleFocus",
+    key: 'handleFocus',
     value: function handleFocus(e) {
       var show = function show() {
         Object.assign(document.getElementsByClassName("SearchResults")[0].style, { height: "100%", opacity: 1 });
@@ -488,7 +493,7 @@ var App = function (_React$Component11) {
       this.setState({ searchResults: e.target.tagName === "INPUT" ? this.state.searchResults : [] });
     }
   }, {
-    key: "handleSearch",
+    key: 'handleSearch',
     value: function handleSearch(e) {
       var text = e.target.value;
       var results = [];
@@ -502,7 +507,7 @@ var App = function (_React$Component11) {
       this.setState({ searchResults: results });
     }
   }, {
-    key: "showSorting",
+    key: 'showSorting',
     value: function showSorting(action) {
       var show = function show() {
         document.getElementsByClassName("SortList")[0].style.display = "block";
@@ -526,7 +531,7 @@ var App = function (_React$Component11) {
       this.style = action ? show() : hide();
     }
   }, {
-    key: "showParameters",
+    key: 'showParameters',
     value: function showParameters(action, parameter) {
       this.setState({ parameter: parameter ? this.state.parameters[parameter] : this.state.parameter });
       var show = function show() {
@@ -543,7 +548,7 @@ var App = function (_React$Component11) {
       this.setState({ sortParameter: parameter });
     }
   }, {
-    key: "showWritersPreview",
+    key: 'showWritersPreview',
     value: function showWritersPreview(param) {
       var _this18 = this;
 
@@ -563,7 +568,7 @@ var App = function (_React$Component11) {
       this.change = this.state.info.toString() === newInfo.toString() ? 0 : show();
     }
   }, {
-    key: "showFull",
+    key: 'showFull',
     value: function showFull(e) {
       var _this19 = this;
 
@@ -592,7 +597,7 @@ var App = function (_React$Component11) {
       this.setState({ edge: 0 });
     }
   }, {
-    key: "handleBack",
+    key: 'handleBack',
     value: function handleBack() {
       document.getElementsByClassName('Writer')[0].style.opacity = 0;
       document.getElementsByClassName('Writer')[0].style.transform = "scale(0.95)";
@@ -610,17 +615,19 @@ var App = function (_React$Component11) {
       }, 400);
     }
   }, {
-    key: "handleSortButton",
-    value: function handleSortButton() {
+    key: 'handleSortButton',
+    value: function handleSortButton(e) {
       var _this20 = this;
 
-      this.setState({ sortHeader: "Фильтры" });
-      this.showSorting(this.state.sortingHidden);
+      var more = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
 
-      this.setState({ sortingHidden: !this.state.sortingHidden });
+      this.setState({ sortHeader: "Фильтры" });
+      this.showSorting(more ? !more : this.state.sortingHidden);
+
+      this.setState({ sortingHidden: more ? true : !this.state.sortingHidden });
 
       this.showParameters(false);
-      this.setState({ parametersHidden: true });
+      this.setState({ parametersHidden: true, showMore: true });
       var newInfo = this.getNewInfo();
 
       if (this.state.info.toString() !== newInfo.toString()) {
@@ -632,7 +639,7 @@ var App = function (_React$Component11) {
       }
     }
   }, {
-    key: "handleSortListButton",
+    key: 'handleSortListButton',
     value: function handleSortListButton(e) {
       var _this21 = this;
 
@@ -645,17 +652,18 @@ var App = function (_React$Component11) {
       }, 300);
     }
   }, {
-    key: "handleSortParameter",
+    key: 'handleSortParameter',
     value: function handleSortParameter(e) {
+      this.setState({ showMore: false });
       this.showWritersPreview(e.target.innerHTML);
     }
   }, {
-    key: "handlePreview",
+    key: 'handlePreview',
     value: function handlePreview(e) {
       this.showFull(e);
     }
   }, {
-    key: "handleSearchLink",
+    key: 'handleSearchLink',
     value: function handleSearchLink(e) {
       var _this22 = this;
 
@@ -669,8 +677,8 @@ var App = function (_React$Component11) {
       this.setState({ writer: e.target.dataset.surname });
     }
   }, {
-    key: "handleMore",
-    value: function handleMore() {
+    key: 'handleMore',
+    value: function handleMore(e) {
       var _this23 = this;
 
       fetch('/more/').then(function (response) {
@@ -684,24 +692,24 @@ var App = function (_React$Component11) {
       }).catch(function (error) {
         console.error('There has been a problem with your fetch operation:', error);
       });
-      this.handleSortButton();
+      this.handleSortButton(e, true);
     }
   }, {
-    key: "render",
+    key: 'render',
     value: function render() {
       return React.createElement(
-        "div",
+        'div',
         null,
         React.createElement(
-          "div",
-          { className: "container" },
+          'div',
+          { className: 'container' },
           React.createElement(
-            "a",
-            { href: "/", className: "h1_a" },
+            'a',
+            { href: '/', className: 'h1_a' },
             React.createElement(
-              "h1",
+              'h1',
               null,
-              "Beloved Writers"
+              'Writers'
             )
           ),
           React.createElement(LiveSearch, { onChange: this.handleSearch, onFocus: this.handleFocus }),
@@ -710,7 +718,7 @@ var App = function (_React$Component11) {
           React.createElement(SortList, { onClick: this.handleSortListButton }),
           React.createElement(SortParameters, { parameter: this.state.parameter, onClick: this.handleSortParameter })
         ),
-        React.createElement(WritersPreview, { moreCounter: this.state.moreCounter, moreButton: this.handleMore, onClick: this.handlePreview, writers: this.state.info }),
+        React.createElement(WritersPreview, { parameters: this.state.showMore, moreCounter: this.state.moreCounter, moreButton: this.handleMore, onClick: this.handlePreview, writers: this.state.info }),
         React.createElement(Writer, { circles: this.state.circles, edge: this.state.edge, onClick: this.handleBack, writer: this.state.writer })
       );
     }
@@ -729,25 +737,25 @@ var Initial = function (_React$Component12) {
   }
 
   _createClass(Initial, [{
-    key: "render",
+    key: 'render',
     value: function render() {
       return React.createElement(
-        "div",
-        { className: "container Initial" },
+        'div',
+        { className: 'container Initial' },
         React.createElement(
-          "a",
-          { href: "/", className: "h1_a" },
+          'a',
+          { href: '/', className: 'h1_a' },
           React.createElement(
-            "h1",
+            'h1',
             null,
-            "Beloved Writers"
+            'Writers'
           )
         ),
-        React.createElement(H4, { inner: "\u0414\u043E\u0431\u0430\u0432\u044C \u0445\u043E\u0442\u044F \u0431\u044B \u0413\u043E\u0433\u043E\u043B\u044F..." }),
+        React.createElement(H4, { inner: '\u0414\u043E\u0431\u0430\u0432\u044C \u0445\u043E\u0442\u044F \u0431\u044B \u0413\u043E\u0433\u043E\u043B\u044F...' }),
         React.createElement(
-          "a",
-          { href: "/admin" },
-          React.createElement(Button, { inner: "\u0412 \u0430\u0434\u043C\u0438\u043D\u043A\u0443" })
+          'a',
+          { href: '/admin' },
+          React.createElement(Button, { inner: '\u0412 \u0430\u0434\u043C\u0438\u043D\u043A\u0443' })
         )
       );
     }
