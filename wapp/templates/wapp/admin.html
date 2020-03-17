@@ -13,8 +13,8 @@
   <div id="root"></div>
   <script>
   	var token = '{{ csrf_token }}';
-  	let writers = JSON.parse('{{ data|safe }}');
-    let moreCounter = '{{ moreCounter }}';
+  	var writers = JSON.parse('{{ data|safe }}');
+    var moreCounter = '{{ moreCounter }}';
     moreCounter = (moreCounter == 'True');
   </script>
   <script src="https://unpkg.com/react@16/umd/react.production.min.js" crossorigin></script>
