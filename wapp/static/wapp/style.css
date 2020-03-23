@@ -55,7 +55,8 @@ h1 {
   position: relative;
   z-index: 9;
   margin-bottom: 10px;
-  transition: .3s; }
+  transition: .3s;
+  border-radius: 0px; }
   .LiveSearch::placeholder {
     font-size: 0.9rem;
     color: #aaa; }
